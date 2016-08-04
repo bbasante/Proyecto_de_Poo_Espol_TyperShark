@@ -24,6 +24,7 @@ public class TyperShark extends Application{
     }
     @Override
     public void start (Stage stage){
+        System.out.println("AÑADIDO CON EXITO AL GITHUB INGENIERO");
         Panel_Organizador panel_organizador = new Panel_Organizador();
         Scene scene = new Scene(panel_organizador.getBorderPane(),700, 500);
         stage.setScene(scene);
