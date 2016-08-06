@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -20,14 +21,17 @@ import javafx.scene.layout.HBox;
 public class Panel_Organizador {
     
     private BorderPane _BorderPane = new BorderPane();
+    private Pane Pane = new Pane();
     private HBox _HBox = new HBox();
-    private Button button = new Button("Jugar");
+    private Button button = new Button();
     public Panel_Organizador(){
     
+    button.setTranslateX(-70);
+    button.setTranslateY(50);
+    button.setMaxSize(70, 70);
+    button.setStyle("-fx-background-image: url('Ancla.jpg');");
     
-    _HBox.setAlignment(Pos.CENTER);
-    _HBox.getChildren().add(button);
-    _BorderPane.setBottom(_HBox);
+    _BorderPane.setCenter(button);
     _BorderPane.setStyle("-fx-background-image: url('fondo_de_pantalla.jpg'); "
            + "-fx-background-position: center center; "
            + "-fx-background-repeat: stretch;"
@@ -47,7 +51,13 @@ public class Panel_Organizador {
     private class CLickHandler_Jugar implements EventHandler<ActionEvent>{
 
         public void handle(ActionEvent event) {
-            System.exit(0);
+            
+            _BorderPane.setStyle("-fx-background-image: url('Dificultad.jpg'); "
+           + "-fx-background-position: center center; "
+           + "-fx-background-repeat: stretch;"
+           +"-fx-background-color: blue;");
+            
+            //System.exit(0);
             
         }
 
