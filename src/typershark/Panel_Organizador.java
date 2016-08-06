@@ -6,6 +6,8 @@
 package typershark;
 
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -19,9 +21,10 @@ public class Panel_Organizador {
     
     private BorderPane _BorderPane = new BorderPane();
     private HBox _HBox = new HBox();
+    private Button button = new Button("Jugar");
     public Panel_Organizador(){
     
-    Button button = new Button("Jugar");
+    
     _HBox.setAlignment(Pos.CENTER);
     _HBox.getChildren().add(button);
     _BorderPane.setBottom(_HBox);
@@ -29,7 +32,7 @@ public class Panel_Organizador {
            + "-fx-background-position: center center; "
            + "-fx-background-repeat: stretch;"
            +"-fx-background-color: blue;");
-    
+    button.setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar());
     }
 
     public BorderPane getBorderPane() {
@@ -38,6 +41,16 @@ public class Panel_Organizador {
 
     public void setBorderPane(BorderPane _BorderPane) {
         this._BorderPane = _BorderPane;
+
+    }
+
+    private class CLickHandler_Jugar implements EventHandler<ActionEvent>{
+
+        public void handle(ActionEvent event) {
+            System.exit(0);
+            
+        }
+
     }
     
     
