@@ -51,7 +51,7 @@ public class Panel_Organizador {
     private class CLickHandler_Jugar implements EventHandler<ActionEvent>{
 
         public void handle(ActionEvent event) {
-            
+            _BorderPane.setCenter(null);
             _BorderPane.setStyle("-fx-background-image: url('Dificultad.jpg'); "
            + "-fx-background-position: center center; "
            + "-fx-background-repeat: stretch;"
