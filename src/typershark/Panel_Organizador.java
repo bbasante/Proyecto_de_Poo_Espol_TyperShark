@@ -9,11 +9,13 @@ package typershark;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 /**
  *
@@ -21,69 +23,31 @@ import javafx.scene.layout.Pane;
  */
 public class Panel_Organizador {
     
-    private BorderPane _BorderPane = new BorderPane();
-    private Pane Pane = new Pane();
-    private HBox _HBox = new HBox();
-    private Button button = new Button(),easy = new Button("hol"),normal = new Button("Adi"),very_hard = new Button(), ludicrous = new Button();;
-    public Panel_Organizador(){
-    
-    button.setTranslateX(-70);
-    button.setTranslateY(50);
-    button.setMaxSize(70, 70);
-    button.setStyle("-fx-background-image: url('Ancla.jpg');");
-    
-    _BorderPane.setCenter(button);
-    _BorderPane.setStyle("-fx-background-image: url('fondo_de_pantalla.jpg'); "
-           + "-fx-background-position: center center; "
-           + "-fx-background-repeat: stretch;"
-           +"-fx-background-color: blue;");
-    button.setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar());
+    private AnchorPane _AnchorPane = new AnchorPane(),_dificultad = new AnchorPane();
+    private Boton button = new Boton(75, 80, 245, 270, "Ancla.jpg");
+    public Panel_Organizador(){    
+    _AnchorPane.setStyle("-fx-background-image: url('fondo_de_pantalla.jpg'); "+ "-fx-background-position: center center; " +"-fx-background-repeat: stretch;"+ "-fx-background-color: blue;");
+    _AnchorPane.getChildren().addAll(button.getBtn());
+    button.getBtn().setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar());
     }
 
-    public BorderPane getBorderPane() {
-        return _BorderPane;
+    public AnchorPane getAnchorPane() {
+        return _AnchorPane;
     }
 
-    public void setBorderPane(BorderPane _BorderPane) {
-        this._BorderPane = _BorderPane;
+    public void setAnchorPane(AnchorPane _AnchorPane) {
+        this._AnchorPane = _AnchorPane;
 
     }
-
     private class CLickHandler_Jugar implements EventHandler<ActionEvent>{
 
         public void handle(ActionEvent event) {
-            _BorderPane.setStyle(null);
-            AnchorPane _HBox_dificultad = new AnchorPane();
-//            easy.setTranslateX(-180);
-//            easy.setTranslateY(110);
-//            easy.setMaxSize(70, 70);
-            //easy.setStyle("-fx-background-image: url('Easy.jpg');"
-            //+ "-fx-background-position: center center; "
-            //+ "-fx-background-repeat: stretch;");
-            
-//            normal.setTranslateX(-140);
-//            normal.setTranslateY(110);
-//            normal.setMaxSize(100, 100);
-//            normal.setStyle("-fx-background-image: url('Normal.jpg');"
-//            + "-fx-background-position: center center; ");
-            
-            _HBox_dificultad.getChildren().addAll(easy,normal);
-            //_HBox_dificultad.setSpacing(80);
-//            _HBox_dificultad.setTranslateX(145);
-//            _HBox_dificultad.setTranslateY(350);
-//            _HBox_dificultad.setMaxSize(500, 500);
-            _BorderPane.setCenter(_HBox_dificultad);
-            
-            _BorderPane.setStyle("-fx-background-image: url('Dificultad.jpg'); "
-           + "-fx-background-position: center center; "
-           + "-fx-background-repeat: stretch;"
-           +"-fx-background-color: blue;");
-            
-            //System.exit(0);
-            
+            panel_organizador_dificultad  panel_organizador_dificultad = new panel_organizador_dificultad();
+            Scene scene = new Scene(panel_organizador_dificultad.getAnchorPane(),700, 500);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("TyperShark");        
+            stage.show();
         }
-
     }
-    
-    
 }

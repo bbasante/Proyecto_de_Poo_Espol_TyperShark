@@ -14,7 +14,6 @@ import javafx.stage.Stage;
  * @author USER
  */
 public class TyperShark extends Application{
-
     /**
      * @param args the command line arguments
      */
@@ -25,9 +24,10 @@ public class TyperShark extends Application{
     @Override
     public void start (Stage stage){
         Panel_Organizador panel_organizador = new Panel_Organizador();
-        Scene scene = new Scene(panel_organizador.getBorderPane(),700, 500);
+        Scene scene = new Scene(panel_organizador.getAnchorPane(),700, 500);
         stage.setScene(scene);
         stage.setTitle("TyperShark");        
         stage.show();
     }
+   
 }
