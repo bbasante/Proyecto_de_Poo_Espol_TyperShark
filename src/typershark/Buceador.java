@@ -16,6 +16,7 @@ import javafx.util.Duration;
  *
  * @author basantes
  */
+
 public class Buceador {
     
     private Image buceador_image = new Image("buceador.gif");
