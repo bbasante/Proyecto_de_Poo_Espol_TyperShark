@@ -34,10 +34,6 @@ public class panel_organizador_dificultad {
         return AnchorPane;
     }
 
-    public void setAnchorPane(AnchorPane AnchorPane) {
-        this.AnchorPane = AnchorPane;
-    }
-
     private class ClickHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent event) {
             panel_organizador_jugar  panel_organizador_jugar = new panel_organizador_jugar();
