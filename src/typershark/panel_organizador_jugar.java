@@ -27,6 +27,7 @@ public class panel_organizador_jugar {
     private TextField textField = new TextField();
     private String palabra[] = new String[20];
     private int avanza=0;
+    
     public panel_organizador_jugar() {
         textField.setMaxSize(700, 500);
         imagenView.setFitHeight(500);
