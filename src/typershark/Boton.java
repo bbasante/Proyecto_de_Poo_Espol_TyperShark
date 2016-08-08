@@ -22,10 +22,5 @@ public class Boton {
 
     public Button getBtn() {
         return btn;
-    }
-
-    public void setBtn(Button btn) {
-        this.btn = btn;
-    }
-    
+    }    
 }
