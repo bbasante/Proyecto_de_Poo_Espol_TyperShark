@@ -6,6 +6,7 @@
 package typershark;
 
 
+import static com.sun.glass.ui.Cursor.setVisible;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -37,7 +38,8 @@ public class Panel_Organizador {
     }
 
     private class CLickHandler_Jugar implements EventHandler<ActionEvent>{
-        public void handle(ActionEvent event) {           
+        public void handle(ActionEvent event) {  
+            
             panel_organizador_dificultad  panel_organizador_dificultad = new panel_organizador_dificultad();
             Scene scene = new Scene(panel_organizador_dificultad.getAnchorPane(),700, 500);
             Stage stage = new Stage();
