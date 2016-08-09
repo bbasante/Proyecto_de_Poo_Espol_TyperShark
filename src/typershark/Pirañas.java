@@ -12,16 +12,16 @@ import javafx.scene.control.Label;
  *
  * @author basantes
  */
-public class Tiburones {
-
+public class Pirañas {
+    
     private Crear_animales crear_animales;
-  
-    public Tiburones() {
+    
+    public Pirañas(){
         Random rnd = new Random(); 
         int posicion = (int) (rnd.nextDouble()*450);
-        crear_animales=new Crear_animales("Tiburon.gif",posicion);
+        crear_animales=new Crear_animales("Piraña.gif",posicion);
     }
-    
+
     public Label getCrear_animales() {
         return crear_animales.getEtiquetaTextoImagen();
     }
