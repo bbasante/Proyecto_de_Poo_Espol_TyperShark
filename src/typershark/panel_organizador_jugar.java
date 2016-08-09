@@ -24,6 +24,7 @@ public class panel_organizador_jugar {
     private ImageView imagenView= new ImageView(image);
     private Timeline timeline = new Timeline();
     private Buceador buceador = new Buceador();
+    private Tiburones tiburon = new Tiburones();
     private TextField textField = new TextField();
     private String palabra[] = new String[20];
     private int avanza=0;
@@ -32,7 +33,7 @@ public class panel_organizador_jugar {
         textField.setMaxSize(700, 500);
         imagenView.setFitHeight(500);
         imagenView.setFitWidth(700);
-        AnchorPane.getChildren().addAll(textField,imagenView,buceador.getBuceador_imagen());
+        AnchorPane.getChildren().addAll(textField,imagenView,buceador.getBuceador_imagen(),tiburon.getEtiquetaTextoImagen());
         AnchorPane.getChildren().get(0).setOnKeyPressed(new KeyPressed());
     }
 
@@ -42,7 +43,7 @@ public class panel_organizador_jugar {
 
     private class KeyPressed implements EventHandler<KeyEvent> {
         public void handle(KeyEvent event) {
-            String word = "hola";          
+            String word = tiburon.getEtiquetaTextoImagen().getText();          
             System.out.println(event.getText());       
             if(event.getText().indexOf(word.charAt(avanza),0)!=-1){
                 palabra[avanza]=event.getText();
