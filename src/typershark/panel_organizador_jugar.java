@@ -34,6 +34,11 @@ public class panel_organizador_jugar {
         imagenView.setFitHeight(500);
         imagenView.setFitWidth(700);
         AnchorPane.getChildren().addAll(textField,imagenView,buceador.getBuceador_imagen(),tiburon.getEtiquetaTextoImagen());
+        double posicion = tiburon.getEtiquetaTextoImagen().getTranslateX();
+        if(posicion<50){
+                System.out.println("Usted Pierde una vida");
+            }
+        System.out.println(tiburon.getEtiquetaTextoImagen().getTranslateX());
         AnchorPane.getChildren().get(0).setOnKeyPressed(new KeyPressed());
     }
 
@@ -44,7 +49,8 @@ public class panel_organizador_jugar {
     private class KeyPressed implements EventHandler<KeyEvent> {
         public void handle(KeyEvent event) {
             String word = tiburon.getEtiquetaTextoImagen().getText();          
-            System.out.println(event.getText());       
+            System.out.println(event.getText());  
+            
             if(event.getText().indexOf(word.charAt(avanza),0)!=-1){
                 palabra[avanza]=event.getText();
                 avanza++;
@@ -53,7 +59,11 @@ public class panel_organizador_jugar {
                     avanza=0;
                     String palabra[] = new String[20];
                     System.out.println("Difito la palabra correcta");
+                    tiburon.getEtiquetaTextoImagen().setVisible(false);
+                    tiburon = new Tiburones();
+                    AnchorPane.getChildren().add(tiburon.getEtiquetaTextoImagen());
                 }
+                
             }   
         }
     }
