@@ -17,9 +17,7 @@ public class Tiburones {
     private Crear_animales crear_animales;
   
     public Tiburones() {
-        Random rnd = new Random(); 
-        int posicion = (int) (rnd.nextDouble()*450);
-        crear_animales=new Crear_animales("Tiburon.gif",posicion);
+        crear_animales=new Crear_animales("Tiburon.gif");
     }
     
     public Label getCrear_animales() {

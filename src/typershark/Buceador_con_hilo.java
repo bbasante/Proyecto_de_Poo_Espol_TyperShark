@@ -5,10 +5,6 @@
  */
 package typershark;
 
-import java.util.Random;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,31 +13,40 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
 
 /**
  *
  * @author basantes
  */
-public class Crear_animales {
-       
-    private Label etiquetaTextoImagen;
-    
-    public Crear_animales(String animal){
+public class Buceador_con_hilo extends Thread{
+private Label etiquetaTextoImagen;
+private int numero=250;
+
         
-        Image Tipo_de_animal= new Image(animal);
+    public Buceador_con_hilo() {
+        Image Tipo_de_animal= new Image("buceador.gif");
         ImageView animal_seleccionado= new ImageView(Tipo_de_animal);
-        
-        etiquetaTextoImagen = new Label("texto");
-        etiquetaTextoImagen.setTextFill(Color.BLACK);
-        etiquetaTextoImagen.setFont(Font.font(null, FontWeight.BOLD, 20));
-        etiquetaTextoImagen.setTextAlignment(TextAlignment.CENTER);
+        etiquetaTextoImagen = new Label();
         etiquetaTextoImagen.setContentDisplay(ContentDisplay.CENTER);
         etiquetaTextoImagen.setGraphicTextGap(1);
         etiquetaTextoImagen.setGraphic(animal_seleccionado);
+    }
+    public void run (){
+        while(true){
+            etiquetaTextoImagen.setTranslateX(0);
+            etiquetaTextoImagen.setTranslateY(numero);
+            numero++;
+            if(numero==450){
+                numero=449;
+            }
+            try{
+                sleep(500);
+            }catch(InterruptedException ex){}
+        }
     }
 
     public Label getEtiquetaTextoImagen() {
         return etiquetaTextoImagen;
     }
+    
 }

@@ -22,24 +22,23 @@ public class panel_organizador_jugar {
     private AnchorPane AnchorPane = new AnchorPane();
     private Image image = new Image("fondo_de_mar.gif");
     private ImageView imagenView= new ImageView(image);
-    private Timeline timeline = new Timeline();
-    private Buceador buceador = new Buceador();
-    private Tiburones tiburon = new Tiburones();
-    private Pirañas pirañas = new Pirañas();
+    private Buceador_con_hilo buceador_con_hilo = new Buceador_con_hilo();
+    private Tiburon_con_hilo tiburon_con_hilo = new Tiburon_con_hilo();
     private TextField textField = new TextField();
     private String palabra[] = new String[20];
     private int avanza=0;
     
     public panel_organizador_jugar() {
+        buceador_con_hilo.start();
+        tiburon_con_hilo.start();
         textField.setMaxSize(700, 500);
         imagenView.setFitHeight(500);
         imagenView.setFitWidth(700);
-        AnchorPane.getChildren().addAll(textField,imagenView,buceador.getBuceador_imagen(),tiburon.getCrear_animales(),pirañas.getCrear_animales());
-        double posicion = tiburon.getCrear_animales().getTranslateX();
-        if(posicion<50){
+        AnchorPane.getChildren().addAll(textField,imagenView,tiburon_con_hilo.getCrear_animales(),buceador_con_hilo.getEtiquetaTextoImagen());
+        double posiciones = tiburon_con_hilo.getCrear_animales().getTranslateX();
+        if(posiciones<50){
                 System.out.println("Usted Pierde una vida");
-            }
-        System.out.println(tiburon.getCrear_animales().getTranslateX());
+            }     
         AnchorPane.getChildren().get(0).setOnKeyPressed(new KeyPressed());
     }
 
@@ -47,9 +46,16 @@ public class panel_organizador_jugar {
         return AnchorPane;
     }
 
+    public Tiburon_con_hilo getTiburon_con_hilo_de_panel_organizador_jugar() {
+        return tiburon_con_hilo;
+    }
+    public Tiburon_con_hilo getTiburon_con_hilo_crear_tiburon() {
+        return tiburon_con_hilo= new Tiburon_con_hilo();
+    }
+
     private class KeyPressed implements EventHandler<KeyEvent> {
         public void handle(KeyEvent event) {
-            String word = tiburon.getCrear_animales().getText();          
+            String word = tiburon_con_hilo.getCrear_animales().getText();          
             System.out.println(event.getText());  
             
             if(event.getText().indexOf(word.charAt(avanza),0)!=-1){
@@ -60,9 +66,14 @@ public class panel_organizador_jugar {
                     avanza=0;
                     String palabra[] = new String[20];
                     System.out.println("Difito la palabra correcta");
-                    tiburon.getCrear_animales().setVisible(false);
-                    tiburon = new Tiburones();
-                    AnchorPane.getChildren().add(tiburon.getCrear_animales());
+                    
+                    tiburon_con_hilo.getCrear_animales().setVisible(false);
+                    tiburon_con_hilo.stop();
+                    
+                    tiburon_con_hilo = new Tiburon_con_hilo();
+                    tiburon_con_hilo.start();
+                    AnchorPane.getChildren().set(2,tiburon_con_hilo.getCrear_animales());
+                    
                 }
                 
             }   

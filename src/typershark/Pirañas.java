@@ -17,9 +17,8 @@ public class Pirañas {
     private Crear_animales crear_animales;
     
     public Pirañas(){
-        Random rnd = new Random(); 
-        int posicion = (int) (rnd.nextDouble()*450);
-        crear_animales=new Crear_animales("Piraña.gif",posicion);
+
+        crear_animales=new Crear_animales("Piraña.gif");
     }
 
     public Label getCrear_animales() {
