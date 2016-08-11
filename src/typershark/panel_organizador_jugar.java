@@ -29,8 +29,8 @@ public class panel_organizador_jugar {
     private int avanza=0;
     
     public panel_organizador_jugar() {
-        buceador_con_hilo.start();
-        tiburon_con_hilo.start();
+        new Thread(buceador_con_hilo).start();
+        new Thread(tiburon_con_hilo).start();
         textField.setMaxSize(700, 500);
         imagenView.setFitHeight(500);
         imagenView.setFitWidth(700);
@@ -66,12 +66,13 @@ public class panel_organizador_jugar {
                     avanza=0;
                     String palabra[] = new String[20];
                     System.out.println("Difito la palabra correcta");
-                    
-                    tiburon_con_hilo.getCrear_animales().setVisible(false);
                     tiburon_con_hilo.stop();
                     
+                    AnchorPane.getChildren().get(2).setVisible(false);
+                    
+                    
                     tiburon_con_hilo = new Tiburon_con_hilo();
-                    tiburon_con_hilo.start();
+                    new Thread(tiburon_con_hilo).start();
                     AnchorPane.getChildren().set(2,tiburon_con_hilo.getCrear_animales());
                     
                 }
