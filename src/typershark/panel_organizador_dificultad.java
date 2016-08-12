@@ -5,6 +5,9 @@
  */
 package typershark;
 
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -36,7 +39,14 @@ public class panel_organizador_dificultad {
 
     private class ClickHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent event) {
-            panel_organizador_jugar  panel_organizador_jugar = new panel_organizador_jugar();
+            panel_organizador_jugar  panel_organizador_jugar = null;
+            
+            try {
+                panel_organizador_jugar = new panel_organizador_jugar();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(panel_organizador_dificultad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             Scene scene = new Scene(panel_organizador_jugar.getAnchorPane(),700, 500);
             Stage stage = new Stage();
             stage.setScene(scene);

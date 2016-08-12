@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -24,13 +25,14 @@ public class Tiburon_con_hilo implements Runnable {
      private int posicionY;
      private String palabra[] = new String[20];
      private int avanza=0;
-     private Palabras palabra_nueva,palabra_nueva_uno;
-     private String word_new,word_new_uno;
-    public Tiburon_con_hilo(Tiburones tiburones){
+     private Palabras palabra_nueva;
+     private int tiempo=100;
+     
+    public Tiburon_con_hilo(Tiburones tiburones) throws FileNotFoundException{
+        this.palabra_nueva = new Palabras();
         this.posicionX=tiburones.getPosicionX();
         this.posicionY=tiburones.getPosicionY();
         this.tiburones=tiburones;
-        
     }
     public void run(){
         while(posicionX>50){
@@ -41,17 +43,25 @@ public class Tiburon_con_hilo implements Runnable {
             
             if(posicionX<51){
                 System.out.println("Usted Pierde una vida");
-                posicionX=600;
+                posicionX=650;
                 Random rnd = new Random(); 
                 this.posicionY= (int) (rnd.nextDouble()*400);
-            }
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        tiburones.getCrear_animales().getEtiquetaTextoImagen().setText(palabra_nueva.obtener_una_palabra());
+                    }
+                });
+                }
             try{
-                Thread.sleep(10);
+                Thread.sleep(getTiempo());
             }catch(InterruptedException ex){}
         }
     }
     
     public void palabra_completada (KeyEvent event){
+        
         String word = tiburones.getCrear_animales().getEtiquetaTextoImagen().getText();          
             System.out.println(event.getText());  
             
@@ -60,6 +70,13 @@ public class Tiburon_con_hilo implements Runnable {
                 avanza++;
                 System.out.println("Entro");
                 if(avanza==word.length()){
+                    tiempo=tiempo-9;
+                    System.out.println(tiempo);
+                    this.setTiempo(tiempo);
+                    if(tiempo<11){
+                        tiempo=10;
+                        
+                    }
                     avanza=0;
                     String palabra[] = new String[20];
                     System.out.println("Digito la palabra correcta");
@@ -68,13 +85,8 @@ public class Tiburon_con_hilo implements Runnable {
                     tiburones.getCrear_animales().getEtiquetaTextoImagen().setTranslateY(posicionY);
                     this.posicionX=600;
                     tiburones.getCrear_animales().getEtiquetaTextoImagen().setTranslateX(posicionX);
-                    try {
-                    palabra_nueva = new Palabras();
-                    word_new=palabra_nueva.getPalabra();
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Tiburon_con_hilo.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                    tiburones.getCrear_animales().getEtiquetaTextoImagen().setText(word_new);
+                    
+                    tiburones.getCrear_animales().getEtiquetaTextoImagen().setText(palabra_nueva.obtener_una_palabra());
                 }
                 
             }
@@ -93,5 +105,13 @@ public class Tiburon_con_hilo implements Runnable {
 
     public void setPosicionY(int posicionY) {
         this.posicionY = posicionY;
+    }
+
+    public void setTiempo(int tiempo) {
+        this.tiempo = tiempo;
+    }
+
+    public int getTiempo() {
+        return tiempo;
     }
 }

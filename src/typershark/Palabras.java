@@ -45,11 +45,12 @@ public class Palabras {
         }
     }
     
-    public void obtener_una_palabra(){
+    public String obtener_una_palabra(){
         rnd = new Random();
         int posicion_aleatoria =  (int) (rnd.nextDouble()*(palabras.size()));
         this.Palabra=palabras.get(posicion_aleatoria);
         System.out.println("La posicion " +posicion_aleatoria +" y la palabra es " +Palabra);
+        return Palabra;
     }
     public String getPalabra() {
         return Palabra;
