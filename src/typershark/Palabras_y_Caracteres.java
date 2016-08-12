@@ -17,13 +17,13 @@ import java.util.Scanner;
  *
  * @author basantes
  */
-public class Palabras {
+public class Palabras_y_Caracteres{
     private Map<Integer,String> palabras;
     private String Palabra;
     private Random rnd;
 
-    public Palabras() throws FileNotFoundException {
-        File file = new File("C:\\Users\\basantes\\Documents\\NetBeansProjects\\TyperShark\\src\\palabras.txt");
+    public Palabras_y_Caracteres(String texto) throws FileNotFoundException {
+        File file = new File("C:\\Users\\basantes\\Documents\\NetBeansProjects\\TyperShark\\src\\"+texto+"");
         Scanner leer_archivos = new Scanner(file);
         palabras=new HashMap<Integer,String>() ;
         Integer acum=0;

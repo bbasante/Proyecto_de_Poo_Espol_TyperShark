@@ -47,11 +47,12 @@ public class panel_organizador_dificultad {
                 Logger.getLogger(panel_organizador_dificultad.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            Scene scene = new Scene(panel_organizador_jugar.getAnchorPane(),700, 500);
+            Scene scene = new Scene(panel_organizador_jugar.getAnchorPane(),1250, 500);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("TyperShark");        
             stage.show();
+            
         }
     }         
 }

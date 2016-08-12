@@ -27,7 +27,7 @@ import javafx.util.Duration;
 public class Crear_animales {
        
     
-    private Palabras palabras=new Palabras();
+    private Palabras_y_Caracteres palabras=new Palabras_y_Caracteres("palabras.txt");
     private String pal=palabras.getPalabra();
     private Label etiquetaTextoImagen = new Label(pal);
     public Crear_animales(String animal) throws FileNotFoundException{

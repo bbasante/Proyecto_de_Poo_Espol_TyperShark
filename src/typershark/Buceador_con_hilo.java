@@ -5,6 +5,8 @@
  */
 package typershark;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -21,7 +24,7 @@ import javafx.scene.text.TextAlignment;
 public class Buceador_con_hilo implements Runnable{
 private Label etiquetaTextoImagen;
 private int numero=250;
-
+private int vidas =3;
         
     public Buceador_con_hilo() {
         Image Tipo_de_animal= new Image("buceador.gif");
@@ -38,7 +41,7 @@ private int numero=250;
             numero++;
             if(numero==450){
                 numero=449;
-            }
+            }            
             try{
                 Thread.sleep(500);
             }catch(InterruptedException ex){}
@@ -48,5 +51,24 @@ private int numero=250;
     public Label getEtiquetaTextoImagen() {
         return etiquetaTextoImagen;
     }
-    
+    public void buceador_tiburon (int posicionX){
+        if(posicionX<51){
+                    Platform.runLater(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                vidas--;
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Usted Pierde una vida");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Usted le quedan=" +vidas+ "vidas");
+                                alert.initStyle(StageStyle.UTILITY);
+                                alert.showAndWait();
+                                if(vidas<0){
+                                    System.exit(0);
+                                }
+                            }
+                        });
+            }
+    }
 }
