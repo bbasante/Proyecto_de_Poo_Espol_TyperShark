@@ -5,7 +5,10 @@
  */
 package typershark;
 
+import java.io.FileNotFoundException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,7 +24,8 @@ public class Tiburon_con_hilo implements Runnable {
      private int posicionY;
      private String palabra[] = new String[20];
      private int avanza=0;
-     
+     private Palabras palabra_nueva,palabra_nueva_uno;
+     private String word_new,word_new_uno;
     public Tiburon_con_hilo(Tiburones tiburones){
         this.posicionX=tiburones.getPosicionX();
         this.posicionY=tiburones.getPosicionY();
@@ -64,6 +68,13 @@ public class Tiburon_con_hilo implements Runnable {
                     tiburones.getCrear_animales().getEtiquetaTextoImagen().setTranslateY(posicionY);
                     this.posicionX=600;
                     tiburones.getCrear_animales().getEtiquetaTextoImagen().setTranslateX(posicionX);
+                    try {
+                    palabra_nueva = new Palabras();
+                    word_new=palabra_nueva.getPalabra();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Tiburon_con_hilo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    tiburones.getCrear_animales().getEtiquetaTextoImagen().setText(word_new);
                 }
                 
             }

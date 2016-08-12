@@ -5,6 +5,7 @@
  */
 package typershark;
 
+import java.io.FileNotFoundException;
 import java.util.Random;
 import javafx.scene.control.Label;
 
@@ -18,7 +19,7 @@ public class Tiburones {
     private Random rnd = new Random(); 
     private int posicionX;
     private int posicionY= (int) (rnd.nextDouble()*400);
-    public Tiburones() {
+    public Tiburones() throws FileNotFoundException {
         crear_animales=new Crear_animales("Tiburon.gif");
         crear_animales.getEtiquetaTextoImagen();
         this.posicionX=600;

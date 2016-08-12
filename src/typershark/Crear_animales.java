@@ -5,6 +5,7 @@
  */
 package typershark;
 
+import java.io.FileNotFoundException;
 import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -25,14 +26,16 @@ import javafx.util.Duration;
  */
 public class Crear_animales {
        
-    private Label etiquetaTextoImagen;
     
-    public Crear_animales(String animal){
+    private Palabras palabras=new Palabras();
+    private String pal=palabras.getPalabra();
+    private Label etiquetaTextoImagen = new Label(pal);
+    public Crear_animales(String animal) throws FileNotFoundException{
         
         Image Tipo_de_animal= new Image(animal);
         ImageView animal_seleccionado= new ImageView(Tipo_de_animal);
         
-        etiquetaTextoImagen = new Label("texto");
+        
         etiquetaTextoImagen.setTextFill(Color.BLACK);
         etiquetaTextoImagen.setFont(Font.font(null, FontWeight.BOLD, 20));
         etiquetaTextoImagen.setTextAlignment(TextAlignment.CENTER);
@@ -43,5 +46,13 @@ public class Crear_animales {
 
     public Label getEtiquetaTextoImagen() {
         return etiquetaTextoImagen;
+    }
+
+    public String getPal() {
+        return pal;
+    }
+
+    public void setPal(String pal) {
+        this.pal = pal;
     }
 }

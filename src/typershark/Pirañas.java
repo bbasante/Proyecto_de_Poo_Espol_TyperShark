@@ -5,6 +5,7 @@
  */
 package typershark;
 
+import java.io.FileNotFoundException;
 import java.util.Random;
 import javafx.scene.control.Label;
 
@@ -16,7 +17,7 @@ public class Pirañas {
     
     private Crear_animales crear_animales;
     
-    public Pirañas(){
+    public Pirañas() throws FileNotFoundException{
 
         crear_animales=new Crear_animales("Piraña.gif");
     }
