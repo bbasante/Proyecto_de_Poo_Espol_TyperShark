@@ -18,7 +18,7 @@ import javafx.scene.text.TextAlignment;
  *
  * @author basantes
  */
-public class Buceador_con_hilo extends Thread{
+public class Buceador_con_hilo implements Runnable{
 private Label etiquetaTextoImagen;
 private int numero=250;
 
@@ -40,7 +40,7 @@ private int numero=250;
                 numero=449;
             }
             try{
-                sleep(500);
+                Thread.sleep(500);
             }catch(InterruptedException ex){}
         }
     }

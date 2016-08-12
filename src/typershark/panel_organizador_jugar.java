@@ -5,6 +5,7 @@
  */
 package typershark;
 
+import java.util.Random;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
@@ -22,62 +23,37 @@ public class panel_organizador_jugar {
     private AnchorPane AnchorPane = new AnchorPane();
     private Image image = new Image("fondo_de_mar.gif");
     private ImageView imagenView= new ImageView(image);
+    private Tiburones tiburones = new Tiburones();
+    private Tiburones tiburones1 = new Tiburones();
     private Buceador_con_hilo buceador_con_hilo = new Buceador_con_hilo();
-    private Tiburon_con_hilo tiburon_con_hilo = new Tiburon_con_hilo();
+    private Tiburon_con_hilo tiburon_con_hilo = new Tiburon_con_hilo(tiburones);
+    private Tiburon_con_hilo tiburon_con_hilo1 = new Tiburon_con_hilo(tiburones1);
     private TextField textField = new TextField();
     private String palabra[] = new String[20];
     private int avanza=0;
     
     public panel_organizador_jugar() {
-        new Thread(buceador_con_hilo).start();
-        new Thread(tiburon_con_hilo).start();
+        Thread thread_buceador_con_hilo = new Thread(buceador_con_hilo);
+        thread_buceador_con_hilo.start();
+        Thread thread_tiburo_con_hilo= new Thread(tiburon_con_hilo);
+        thread_tiburo_con_hilo.start();
+        Thread thread_tiburo_con_hilo1= new Thread(tiburon_con_hilo1);
+        thread_tiburo_con_hilo1.start();
         textField.setMaxSize(700, 500);
         imagenView.setFitHeight(500);
         imagenView.setFitWidth(700);
-        AnchorPane.getChildren().addAll(textField,imagenView,tiburon_con_hilo.getCrear_animales(),buceador_con_hilo.getEtiquetaTextoImagen());
-        double posiciones = tiburon_con_hilo.getCrear_animales().getTranslateX();
-        if(posiciones<50){
-                System.out.println("Usted Pierde una vida");
-            }     
+        AnchorPane.getChildren().addAll(textField,imagenView,tiburon_con_hilo.getTiburones().getCrear_animales().getEtiquetaTextoImagen()  ,buceador_con_hilo.getEtiquetaTextoImagen(), tiburones1.getCrear_animales().getEtiquetaTextoImagen());    
         AnchorPane.getChildren().get(0).setOnKeyPressed(new KeyPressed());
     }
 
     public AnchorPane getAnchorPane() {
         return AnchorPane;
-    }
-
-    public Tiburon_con_hilo getTiburon_con_hilo_de_panel_organizador_jugar() {
-        return tiburon_con_hilo;
-    }
-    public Tiburon_con_hilo getTiburon_con_hilo_crear_tiburon() {
-        return tiburon_con_hilo= new Tiburon_con_hilo();
-    }
+    }  
 
     private class KeyPressed implements EventHandler<KeyEvent> {
         public void handle(KeyEvent event) {
-            String word = tiburon_con_hilo.getCrear_animales().getText();          
-            System.out.println(event.getText());  
-            
-            if(event.getText().indexOf(word.charAt(avanza),0)!=-1){
-                palabra[avanza]=event.getText();
-                avanza++;
-                System.out.println("Entro");
-                if(avanza==word.length()){
-                    avanza=0;
-                    String palabra[] = new String[20];
-                    System.out.println("Difito la palabra correcta");
-                    tiburon_con_hilo.stop();
-                    
-                    AnchorPane.getChildren().get(2).setVisible(false);
-                    
-                    
-                    tiburon_con_hilo = new Tiburon_con_hilo();
-                    new Thread(tiburon_con_hilo).start();
-                    AnchorPane.getChildren().set(2,tiburon_con_hilo.getCrear_animales());
-                    
-                }
-                
-            }   
+            tiburon_con_hilo.palabra_completada(event); 
+            tiburon_con_hilo1.palabra_completada(event);
         }
     }
 }

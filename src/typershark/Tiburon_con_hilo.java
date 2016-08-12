@@ -7,46 +7,80 @@ package typershark;
 
 import java.util.Random;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
  *
  * @author basantes
  */
-public class Tiburon_con_hilo extends Thread {
+public class Tiburon_con_hilo implements Runnable {
 
-     private Crear_animales crear_animales;
-     Random rnd = new Random(); 
-     private int posicion ;
-     private int numero;
-     private panel_organizador_jugar panel_organizador_jugar;
-    public Tiburon_con_hilo(){
-        posicion= (int) (rnd.nextDouble()*350);
-        numero=550;
-        crear_animales=new Crear_animales("Tiburon.gif");
+     private Tiburones tiburones;
+     private int posicionX;
+     private int posicionY;
+     private String palabra[] = new String[20];
+     private int avanza=0;
+     
+    public Tiburon_con_hilo(Tiburones tiburones){
+        this.posicionX=tiburones.getPosicionX();
+        this.posicionY=tiburones.getPosicionY();
+        this.tiburones=tiburones;
+        
     }
     public void run(){
-        while(true){
-            getCrear_animales().setTranslateX(numero);
-            getCrear_animales().setTranslateY(posicion);
-            numero--;
-            if(numero<50){
-//                panel_organizador_jugar = new panel_organizador_jugar();
-//                panel_organizador_jugar.getTiburon_con_hilo_de_panel_organizador_jugar().stop();
-//                panel_organizador_jugar.getTiburon_con_hilo_de_panel_organizador_jugar().getCrear_animales().setVisible(false);
-//                
-                numero=550;
+        while(posicionX>50){
+            
+            tiburones.getCrear_animales().getEtiquetaTextoImagen().setTranslateX(posicionX);
+            tiburones.getCrear_animales().getEtiquetaTextoImagen().setTranslateY(posicionY);
+            posicionX=posicionX-1;
+            
+            if(posicionX<51){
+                System.out.println("Usted Pierde una vida");
+                posicionX=600;
+                Random rnd = new Random(); 
+                this.posicionY= (int) (rnd.nextDouble()*400);
             }
             try{
-                sleep(10);
+                Thread.sleep(10);
             }catch(InterruptedException ex){}
         }
     }
-    public Label getCrear_animales() {
-        return crear_animales.getEtiquetaTextoImagen();
+    
+    public void palabra_completada (KeyEvent event){
+        String word = tiburones.getCrear_animales().getEtiquetaTextoImagen().getText();          
+            System.out.println(event.getText());  
+            
+            if(event.getText().indexOf(word.charAt(avanza),0)!=-1){
+                palabra[avanza]=event.getText();
+                avanza++;
+                System.out.println("Entro");
+                if(avanza==word.length()){
+                    avanza=0;
+                    String palabra[] = new String[20];
+                    System.out.println("Digito la palabra correcta");
+                    Random rnd = new Random(); 
+                    this.posicionY= (int) (rnd.nextDouble()*400);
+                    tiburones.getCrear_animales().getEtiquetaTextoImagen().setTranslateY(posicionY);
+                    this.posicionX=600;
+                    tiburones.getCrear_animales().getEtiquetaTextoImagen().setTranslateX(posicionX);
+                }
+                
+            }
     }
-   public Tiburon_con_hilo getTiburon_con_hilo(){
-       return panel_organizador_jugar.getTiburon_con_hilo_de_panel_organizador_jugar();
-   }
+    public Tiburones getTiburones() {
+        return tiburones;
+    }
 
+    public void setTiburones(Tiburones tiburones) {
+        this.tiburones = tiburones;
+    }
+
+    public void setPosicionX(int posicionX) {
+        this.posicionX = posicionX;
+    }
+
+    public void setPosicionY(int posicionY) {
+        this.posicionY = posicionY;
+    }
 }
