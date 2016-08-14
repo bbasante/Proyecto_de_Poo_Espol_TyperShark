@@ -36,4 +36,12 @@ public class Tiburon_negro_con_hilo implements Runnable{
     public void setCrear_animales(Crear_animales crear_animales){
         this.crear_animales=crear_animales;
     } 
+
+    public Validacion_de_animales getValidacion_de_animales() {
+        return validacion_de_animales;
+    }
+
+    public void setValidacion_de_animales(Validacion_de_animales validacion_de_animales) {
+        this.validacion_de_animales = validacion_de_animales;
+    }
 }

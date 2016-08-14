@@ -25,11 +25,11 @@ public class Tiburon_con_hilo implements Runnable {
         validacion_de_animales=new Validacion_de_animales(crear_animales,palabra_nueva);
     }
     public void run(){
-        this.setCrear_animales(validacion_de_animales.avanza_pierde_vida());        
+        this.setCrear_animales(validacion_de_animales.avanza_pierde_vida_tiburon());        
     }
     
     public void palabra_completada (KeyEvent event){     
-        this.setCrear_animales(validacion_de_animales.palabra_completada(crear_animales, palabra_nueva, event));
+        this.setCrear_animales(validacion_de_animales.palabra_completada_tiburon(crear_animales, palabra_nueva, event));
     }
 
     public Label getCrear_animales() {

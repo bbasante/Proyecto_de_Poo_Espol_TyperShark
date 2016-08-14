@@ -41,15 +41,15 @@ public class Palabras_y_Caracteres{
         Iterator iterador = palabras.keySet().iterator();
         while(iterador.hasNext()){
           Integer key = (Integer) iterador.next();
-          System.out.println("Clave: " + key + " -> Valor: " + palabras.get(key));
+//          System.out.println("Clave: " + key + " -> Valor: " + palabras.get(key));
         }
     }
     
     public String obtener_una_palabra(){
         rnd = new Random();
-        int posicion_aleatoria =  (int) (rnd.nextDouble()*(palabras.size()));
+        int posicion_aleatoria =  (int) (rnd.nextDouble()*(palabras.size()-1));
         this.Palabra=palabras.get(posicion_aleatoria);
-        System.out.println("La posicion " +posicion_aleatoria +" y la palabra es " +Palabra);
+//        System.out.println("La posicion " +posicion_aleatoria +" y la palabra es " +Palabra);
         return Palabra;
     }
     public String getPalabra() {

@@ -5,6 +5,12 @@
  */
 package typershark;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ContentDisplay;
@@ -24,26 +30,35 @@ import javafx.stage.StageStyle;
 public class Buceador_con_hilo implements Runnable{
 private Label etiquetaTextoImagen;
 private int numero=250;
-private int vidas =3;
-        
-    public Buceador_con_hilo() {
+private int posicionX=1200;
+private Vidas_del_jugador vidas_del_jugador;
+
+    public Buceador_con_hilo(Vidas_del_jugador vidas_del_jugador) throws FileNotFoundException {
         Image Tipo_de_animal= new Image("buceador.gif");
         ImageView animal_seleccionado= new ImageView(Tipo_de_animal);
         etiquetaTextoImagen = new Label();
         etiquetaTextoImagen.setContentDisplay(ContentDisplay.CENTER);
         etiquetaTextoImagen.setGraphicTextGap(1);
         etiquetaTextoImagen.setGraphic(animal_seleccionado);
+        this.vidas_del_jugador=vidas_del_jugador;
     }
+
     public void run (){
         while(true){
             etiquetaTextoImagen.setTranslateX(0);
             etiquetaTextoImagen.setTranslateY(numero);
             numero++;
-            if(numero==450){
-                numero=449;
+            
+            vidas_del_jugador.Vidas_perdidas();
+            vidas_del_jugador.setTiburon(vidas_del_jugador.getTiburon());
+            vidas_del_jugador.setPiraña(vidas_del_jugador.getPiraña());
+            vidas_del_jugador.setTiburon_negro(vidas_del_jugador.getTiburon_negro());
+            
+            if(numero==650){
+                numero=649;
             }            
             try{
-                Thread.sleep(500);
+                Thread.sleep(1000);
             }catch(InterruptedException ex){}
         }
     }
@@ -51,24 +66,12 @@ private int vidas =3;
     public Label getEtiquetaTextoImagen() {
         return etiquetaTextoImagen;
     }
-    public void buceador_tiburon (int posicionX){
-        if(posicionX<51){
-                    Platform.runLater(new Runnable() {
 
-                            @Override
-                            public void run() {
-                                vidas--;
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("Usted Pierde una vida");
-                                alert.setHeaderText(null);
-                                alert.setContentText("Usted le quedan=" +vidas+ "vidas");
-                                alert.initStyle(StageStyle.UTILITY);
-                                alert.showAndWait();
-                                if(vidas<0){
-                                    System.exit(0);
-                                }
-                            }
-                        });
-            }
+    public Vidas_del_jugador getVidas_del_jugador() {
+        return vidas_del_jugador;
+    }
+
+    public void setVidas_del_jugador(Vidas_del_jugador vidas_del_jugador) {
+        this.vidas_del_jugador = vidas_del_jugador;
     }
 }
