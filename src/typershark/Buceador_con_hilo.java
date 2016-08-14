@@ -48,7 +48,6 @@ private Vidas_del_jugador vidas_del_jugador;
             etiquetaTextoImagen.setTranslateX(0);
             etiquetaTextoImagen.setTranslateY(numero);
             numero++;
-            
             vidas_del_jugador.Vidas_perdidas();
             vidas_del_jugador.setTiburon(vidas_del_jugador.getTiburon());
             vidas_del_jugador.setPiraña(vidas_del_jugador.getPiraña());
