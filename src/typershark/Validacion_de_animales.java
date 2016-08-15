@@ -8,6 +8,7 @@ package typershark;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -16,7 +17,7 @@ import javafx.scene.input.KeyEvent;
  */
 public class Validacion_de_animales {
 
-    private Crear_animales crear_animales;
+    private Label crear_animales;
     
     private String palabra[] = new String[20];
     private int avanza=0;
@@ -31,36 +32,36 @@ public class Validacion_de_animales {
     private int acum_random=1;
     public int puntaje=0;
 
-    public Validacion_de_animales(Crear_animales crear_animales, Palabras_y_Caracteres palabra_nueva) {
+    public Validacion_de_animales(Label crear_animales, Palabras_y_Caracteres palabra_nueva) {
         this.crear_animales=crear_animales;
         this.palabra_nueva=palabra_nueva;
     }
-    public Crear_animales avanza_pierde_vida_tiburon (){
+    public Label avanza_pierde_vida_tiburon (){
         this.avanzar_animales(0);
         return crear_animales;
 }
     
-public Crear_animales palabra_completada_tiburon (Crear_animales crear_animales, Palabras_y_Caracteres palabra_nueva, KeyEvent event){
+public Label palabra_completada_tiburon (Label crear_animales, Palabras_y_Caracteres palabra_nueva, KeyEvent event){
         this.palabra_completa_animales(event, 19, 0);
         return crear_animales;
 }
 
-    public Crear_animales avanza_pierde_vida_piraña (){
+    public Label avanza_pierde_vida_piraña (){
         this.avanzar_animales(0);
         return crear_animales;
 }
     
-public Crear_animales palabra_completada_piraña (Crear_animales crear_animales, Palabras_y_Caracteres palabra_nueva, KeyEvent event){
+public Label palabra_completada_piraña (Label crear_animales, Palabras_y_Caracteres palabra_nueva, KeyEvent event){
         this.palabra_completa_animales(event, 19, 0);
         return crear_animales;
 }
 
-public Crear_animales avanza_pierde_vida_tiburon_negro (){
+public Label avanza_pierde_vida_tiburon_negro (){
     this.avanzar_animales(1);
         return crear_animales;
 }
-public Crear_animales palabra_completada_tiburon_negro(Crear_animales crear_animales, Palabras_y_Caracteres palabra_nueva, KeyEvent event){
-        this.palabra_completa_animales(event, 19, 0);
+public Label palabra_completada_tiburon_negro(Label crear_animales, Palabras_y_Caracteres palabra_nueva, KeyEvent event){
+        this.palabra_completa_animales(event, 19, 1);
         return crear_animales;
 }
     public int getTiempo() {
@@ -72,11 +73,11 @@ public Crear_animales palabra_completada_tiburon_negro(Crear_animales crear_anim
     }
     public void avanzar_animales (int elegir){
         while(posicionX>50){
-            crear_animales.getEtiquetaTextoImagen().setTranslateX(posicionX);
+            crear_animales.setTranslateX(posicionX);
             if(elegir==0){
-                crear_animales.getEtiquetaTextoImagen().setTranslateY(getPosicionY());
+                crear_animales.setTranslateY(getPosicionY());
             }else{
-                crear_animales.getEtiquetaTextoImagen().setTranslateY(getPosicionY_tiburon_negro());
+                crear_animales.setTranslateY(getPosicionY_tiburon_negro());
             }
             
             posicionX=posicionX-1;
@@ -93,7 +94,7 @@ public Crear_animales palabra_completada_tiburon_negro(Crear_animales crear_anim
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                    crear_animales.getEtiquetaTextoImagen().setText(palabra_nueva.obtener_una_palabra());
+                    crear_animales.setText(palabra_nueva.obtener_una_palabra());
                     }
                 });
                 }
@@ -104,7 +105,7 @@ public Crear_animales palabra_completada_tiburon_negro(Crear_animales crear_anim
         }
     }
     public void palabra_completa_animales (KeyEvent event, int disminuir, int elegir){
-        String word = crear_animales.getEtiquetaTextoImagen().getText();
+        String word = crear_animales.getText();
 //        System.out.println(event.getText());  
             
             if(event.getText().indexOf(word.charAt(avanza),0)!=-1){
@@ -131,20 +132,20 @@ public Crear_animales palabra_completada_tiburon_negro(Crear_animales crear_anim
                     Random rnd = new Random(); 
                     if(elegir==0){
                     this.setPosicionY((int) (rnd.nextDouble()*500));
-                    crear_animales.getEtiquetaTextoImagen().setTranslateY(getPosicionY());
+                    crear_animales.setTranslateY(getPosicionY());
                     this.posicionX=1200;
-                    crear_animales.getEtiquetaTextoImagen().setTranslateX(posicionX);
-                    crear_animales.getEtiquetaTextoImagen().setText(palabra_nueva.obtener_una_palabra());
+                    crear_animales.setTranslateX(posicionX);
+                    crear_animales.setText(palabra_nueva.obtener_una_palabra());
                     }else{
                         if(randomInteger>acum_random){
-                        crear_animales.getEtiquetaTextoImagen().setText(palabra_nueva.obtener_una_palabra());
+                        crear_animales.setText(palabra_nueva.obtener_una_palabra());
                         
                         }else{
                             this.setPosicionY_tiburon_negro((int) (rnd.nextDouble()*400)); 
-                            crear_animales.getEtiquetaTextoImagen().setTranslateY(getPosicionY_tiburon_negro());
+                            crear_animales.setTranslateY(getPosicionY_tiburon_negro());
                             this.posicionX=1200;
-                            crear_animales.getEtiquetaTextoImagen().setTranslateX(posicionX);
-                            crear_animales.getEtiquetaTextoImagen().setText(palabra_nueva.obtener_una_palabra());
+                            crear_animales.setTranslateX(posicionX);
+                            crear_animales.setText(palabra_nueva.obtener_una_palabra());
                             acum_random=0;
                             randomInteger=ThreadLocalRandom.current().nextInt(2, 3 + 1);
                         }

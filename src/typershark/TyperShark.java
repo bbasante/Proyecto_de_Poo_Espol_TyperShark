@@ -5,7 +5,6 @@
  */
 package typershark;
 
-import java.util.concurrent.ThreadLocalRandom;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -30,9 +29,9 @@ public class TyperShark extends Application{
         Audio audio = new Audio();
         new Thread(audio).start();  
         Panel_Organizador panel_organizador = new Panel_Organizador();
-        Scene scene = new Scene(panel_organizador.getAnchorPane(),700, 500);
+        Scene scene = new Scene(panel_organizador.getAnchorPane(),1250, 700);
         stage.setScene(scene);
         stage.setTitle("TyperShark"); 
         stage.show();
-    }   
+    }       
 }
