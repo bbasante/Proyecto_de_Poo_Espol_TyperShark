@@ -34,7 +34,7 @@ import javafx.stage.Stage;
  * @author basantes
  */
 public class Panel_Organizador{
-    
+    //REVISION DEL ARCHIVO CLONADO PARA VER LOS CAMBIOS
     //private AnchorPane _AnchorPane = new AnchorPane();
     private AnchorPane _gamePane = new AnchorPane();
     private AnchorPane _introPane = new AnchorPane();
