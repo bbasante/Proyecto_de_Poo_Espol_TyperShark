@@ -14,24 +14,28 @@ import javafx.stage.Stage;
  *
  * @author USER
  */
-public class TyperShark extends Application{
+public class TyperShark extends Application
+{
     /**
      * @param args the command line arguments
      */
+    public static Stage mainStage;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         // TODO code application logic here
         launch(args);
     }
     
     @Override
-    public void start (Stage stage) throws Exception{
+    public void start (Stage stage) throws Exception
+    {
+        mainStage = stage;
         Audio audio = new Audio();
         new Thread(audio).start();  
         Panel_Organizador panel_organizador = new Panel_Organizador();
-        Scene scene = new Scene(panel_organizador.getAnchorPane(),1250, 700);
-        stage.setScene(scene);
-        stage.setTitle("TyperShark"); 
-        stage.show();
+        mainStage.setScene(panel_organizador.getScene());                
+        mainStage.setTitle("TyperShark"); 
+        mainStage.show();
     }       
 }

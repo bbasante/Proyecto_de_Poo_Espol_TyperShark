@@ -11,11 +11,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,7 +35,10 @@ import javafx.stage.Stage;
  */
 public class Panel_Organizador{
     
-    private AnchorPane _AnchorPane = new AnchorPane();
+    //private AnchorPane _AnchorPane = new AnchorPane();
+    private AnchorPane _gamePane = new AnchorPane();
+    private AnchorPane _introPane = new AnchorPane();
+    private AnchorPane _selectPane = new AnchorPane();
     private Button button, easy, normal, very_hard, ludicrous;
     
     private Image image = new Image("fondo_de_mar.gif");
@@ -47,24 +53,129 @@ public class Panel_Organizador{
     private ArrayList <Animales> piraña = new ArrayList <Animales>();
     private ArrayList <Animales> tiburon_negro = new ArrayList <Animales>();
     
-    public Panel_Organizador(){  
-    button=Boton(75, 80, 520, 370, "Ancla.jpg");
-    _AnchorPane.setStyle("-fx-background-image: url('fondo_de_pantalla.jpg'); "+ "-fx-background-position: center center; " +"-fx-background-repeat: stretch;"+ "-fx-background-color: blue;");
-    _AnchorPane.getChildren().addAll(button);
-    button.setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar());
+    private Scene onairScene, mainScene, secondScene;
+    private BorderPane mainPane, secondPane; 
+    private Pane helpPane, aboutPane;
+    
+    private HBox btmainPane, btsecondPane;
+    
+    Label lblHelp = new Label("Aquí va el texto de ayuda\n" +
+                                "y guía para comprender el juego");
+    Label lblAbout = new Label("Aquí van los autores\n" +
+                                "y la tabla de los puntajes más altos");
+    Button btHelp = new Button("Ayuda");
+    Button btAbout = new Button("Acerca de");
+    Button btBack1 = new Button("Retornar");  
+    Button btBack2 = new Button("Retornar");  
+    Button btQuit = new Button("Quit"); 
+    
+    public Panel_Organizador()
+    {  
+        button=Boton(75, 80, 520, 370, "Ancla.jpg");
+        _introPane.setStyle("-fx-background-image: url('fondo_de_pantalla.jpg'); "+ "-fx-background-position: center center; " +"-fx-background-repeat: stretch;"+ "-fx-background-color: blue;");
+        _introPane.getChildren().addAll(button);
+        button.setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar(0));
+        
+        easy=Boton(100,100,400,410,"Easy.jpg");normal=Boton(100,100,530,410,"Normal.jpg");           
+        very_hard=Boton(110,100,640,410,"Very_Hard.jpg");ludicrous=Boton(100,100,780,410,"Ludicrous.jpg");
+        _selectPane.getChildren().setAll(easy,normal,very_hard,ludicrous);
+        _selectPane.setStyle("-fx-background-image: url('Dificultad.jpg'); "+ "-fx-background-position: center center; "+ "-fx-background-repeat: stretch;"+"-fx-background-color: blue;");
+        easy.setOnAction((EventHandler<ActionEvent>) new ClickHandler());
+        
+        mainPane = new BorderPane();
+        secondPane = new BorderPane();
+        helpPane = new Pane();
+        aboutPane = new Pane();
+        
+        btmainPane = new HBox();      
+        btmainPane.getChildren().addAll(btHelp, btAbout, btBack1, btQuit);
+        btmainPane.setSpacing(50);
+        btmainPane.setAlignment(Pos.CENTER);
+        btmainPane.setStyle("-fx-background-color: blue;");
+        btmainPane.setPadding(new Insets(10));
+        
+        btsecondPane = new HBox();      
+        btsecondPane.getChildren().addAll(btBack2);
+        btsecondPane.setSpacing(50);
+        btsecondPane.setAlignment(Pos.CENTER);
+        btsecondPane.setStyle("-fx-background-color: blue;");
+        btsecondPane.setPadding(new Insets(10));
+        
+        mainPane.setCenter(_introPane);
+        mainPane.setBottom(btmainPane);
+        secondPane.setCenter(_selectPane);        
+        secondPane.setBottom(btsecondPane);
+                
+        mainScene = new Scene(mainPane, 1250, 700);
+        secondScene = new Scene(secondPane, 1250, 700);        
+        
+        btHelp.setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar(1));
+        btAbout.setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar(2));
+        btBack1.setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar(3));  
+        btBack2.setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar(4));  
+        btQuit.setOnAction((EventHandler<ActionEvent>) new CLickHandler_Jugar(5)); 
+        
+        onairScene = mainScene; 
     }
-
-    public AnchorPane getAnchorPane() {
+    /**
+    public AnchorPane getAnchorPane() 
+    {
         return _AnchorPane;
     }
-
-    private class CLickHandler_Jugar implements EventHandler<ActionEvent>{
-        public void handle(ActionEvent event) {
-            easy=Boton(100,100,400,410,"Easy.jpg");normal=Boton(100,100,530,410,"Normal.jpg");           
-            very_hard=Boton(110,100,640,410,"Very_Hard.jpg");ludicrous=Boton(100,100,780,410,"Ludicrous.jpg");
-            _AnchorPane.getChildren().setAll(easy,normal,very_hard,ludicrous);
-            _AnchorPane.setStyle("-fx-background-image: url('Dificultad.jpg'); "+ "-fx-background-position: center center; "+ "-fx-background-repeat: stretch;"+"-fx-background-color: blue;");
-            easy.setOnAction((EventHandler<ActionEvent>) new ClickHandler());
+    */ 
+    public Scene getScene() 
+    {
+        return onairScene;
+    }
+    
+    private class CLickHandler_Jugar implements EventHandler<ActionEvent>
+    {
+        private int clickHandler;
+        
+        public CLickHandler_Jugar(int _clickHandler)
+        {
+            clickHandler = _clickHandler;
+        }
+        
+        public void handle(ActionEvent event) 
+        {        
+            switch (clickHandler)
+            {
+                case 0:
+                        {   
+                            TyperShark.mainStage.setScene(secondScene);                            
+                            break;
+                        }
+                case 1:
+                        {
+                            mainPane.setCenter(helpPane);                            
+                            break;
+                        }   
+                case 2:
+                        {
+                            mainPane.setCenter(aboutPane);                            
+                            break;
+                        }
+                case 3:
+                        {
+                            mainPane.setCenter(_introPane);
+                            break;
+                        }   
+                case 4:
+                        {
+                            TyperShark.mainStage.setScene(mainScene);                         
+                            break;
+                        }
+                case 5:
+                        {                            
+                            Platform.exit();
+                            break;
+                        }                
+                default :
+                        {           
+                            break;
+                        }
+            }
         }
     }
     private class ClickHandler implements EventHandler<ActionEvent> {
@@ -89,8 +200,9 @@ public class Panel_Organizador{
             imagenView.setFitHeight(700);
             imagenView.setFitWidth(1250);
             
-            _AnchorPane.getChildren().setAll(textField,imagenView,tiburon_con_hilo.getCrear_animales_tiburon(),tiburon_con_hilo1.getCrear_animales_tiburon(),buceador_con_hilo.getEtiquetaTextoImagen(),piraña_con_hilo.getCrear_animales_piraña(),piraña_con_hilo1.getCrear_animales_piraña(),tiburon_negro_con_hilo.getCrear_animales_tiburon_negro(),tiburon_negro_con_hilo1.getCrear_animales_tiburon_negro()); 
-            _AnchorPane.getChildren().get(0).setOnKeyPressed(new KeyPressed());            
+            _gamePane.setStyle("-fx-background-image: url('Dificultad.jpg'); "+ "-fx-background-position: center center; "+ "-fx-background-repeat: stretch;"+"-fx-background-color: blue;");
+            _gamePane.getChildren().setAll(textField,imagenView,tiburon_con_hilo.getCrear_animales_tiburon(),tiburon_con_hilo1.getCrear_animales_tiburon(),buceador_con_hilo.getEtiquetaTextoImagen(),piraña_con_hilo.getCrear_animales_piraña(),piraña_con_hilo1.getCrear_animales_piraña(),tiburon_negro_con_hilo.getCrear_animales_tiburon_negro(),tiburon_negro_con_hilo1.getCrear_animales_tiburon_negro()); 
+            _gamePane.getChildren().get(0).setOnKeyPressed(new KeyPressed());            
         }
     } 
     
