@@ -105,7 +105,9 @@ public class Panel_Organizador{
         mainPane.setBottom(btmainPane);
         secondPane.setCenter(_selectPane);        
         secondPane.setBottom(btsecondPane);
-                
+        helpPane.getChildren().addAll(lblHelp);
+        aboutPane.getChildren().addAll(lblAbout);
+        
         mainScene = new Scene(mainPane, 1250, 700);
         secondScene = new Scene(secondPane, 1250, 700);        
         
