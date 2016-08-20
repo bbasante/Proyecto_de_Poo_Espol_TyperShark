@@ -17,27 +17,27 @@ import java.util.Scanner;
  *
  * @author basantes
  */
-public class Palabras_y_Caracteres{
+public class Palabras {
     private Map<Integer,String> palabras;
     private String Palabra;
     private Random rnd;
 
-    public Palabras_y_Caracteres(String texto) throws FileNotFoundException {
+    public Palabras(String texto) throws FileNotFoundException {
         File file = new File("C:\\Users\\basantes\\Documents\\NetBeansProjects\\TyperShark\\src\\"+texto+"");
         Scanner leer_archivos = new Scanner(file);
         palabras=new HashMap<Integer,String>() ;
         Integer acum=0;
-        llenar_el_mapa_con_palabras((HashMap<Integer, String>) palabras, leer_archivos, acum);
-//        imprimir_mapa((HashMap<Integer, String>) palabras);
-        obtener_una_palabra();
+        llenar((HashMap<Integer, String>) palabras, leer_archivos, acum);
+//        imprimir((HashMap<Integer, String>) palabras);
+        obtener();
     }
-    public void llenar_el_mapa_con_palabras(HashMap <Integer,String> palabras, Scanner leer_archivos,Integer acum){
+    public void llenar(HashMap <Integer,String> palabras, Scanner leer_archivos,Integer acum){
             while(leer_archivos.hasNextLine()){
              palabras.put( acum ,leer_archivos.nextLine());
              acum++;
         }
     }
-    public void imprimir_mapa(HashMap <Integer,String> palabras){
+    public void imprimir(HashMap <Integer,String> palabras){
         Iterator iterador = palabras.keySet().iterator();
         while(iterador.hasNext()){
           Integer key = (Integer) iterador.next();
@@ -45,7 +45,7 @@ public class Palabras_y_Caracteres{
         }
     }
     
-    public String obtener_una_palabra(){
+    public String obtener(){
         rnd = new Random();
         int posicion_aleatoria =  (int) (rnd.nextDouble()*(palabras.size()-1));
         this.Palabra=palabras.get(posicion_aleatoria);

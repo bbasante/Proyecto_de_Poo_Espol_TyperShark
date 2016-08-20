@@ -43,17 +43,9 @@ public class Panel_Organizador{
     
     private Image image = new Image("fondo_de_mar.gif");
     private ImageView imagenView= new ImageView(image);
-    private Buceador_con_hilo buceador_con_hilo;
-    private Animales tiburon_con_hilo,tiburon_con_hilo1,tiburon_con_hilo2,tiburon_con_hilo3,tiburon_con_hilo4,tiburon_con_hilo5;
-    private Animales piraña_con_hilo,piraña_con_hilo1;
-    private Animales tiburon_negro_con_hilo,tiburon_negro_con_hilo1;
     private TextField textField = new TextField();
     
-    private ArrayList <Animales> tiburon = new ArrayList <Animales>();
-    private ArrayList <Animales> piraña = new ArrayList <Animales>();
-    private ArrayList <Animales> tiburon_negro = new ArrayList <Animales>();
-    
-    private Scene onairScene, mainScene, secondScene;
+    private Scene onairScene, mainScene, secondScene, sceneJugar;
     private BorderPane mainPane, secondPane; 
     private Pane helpPane, aboutPane;
     
@@ -69,6 +61,13 @@ public class Panel_Organizador{
     Button btBack2 = new Button("Retornar");  
     Button btQuit = new Button("Quit"); 
     
+    private Tiburon tiburones;
+    private Piraña pirañas;
+    private TiburonNegro tiburonNegro;
+    private Buceador buceador;
+    private ArrayList <Tiburon> tiburon = new ArrayList <Tiburon> ();
+    private ArrayList <Piraña> piraña = new ArrayList <Piraña>();
+    private ArrayList <TiburonNegro> tiburon_negro = new ArrayList <TiburonNegro>();
     public Panel_Organizador()
     {  
         button=Boton(75, 80, 520, 370, "Ancla.jpg");
@@ -119,12 +118,7 @@ public class Panel_Organizador{
         
         onairScene = mainScene; 
     }
-    /**
-    public AnchorPane getAnchorPane() 
-    {
-        return _AnchorPane;
-    }
-    */ 
+
     public Scene getScene() 
     {
         return onairScene;
@@ -193,17 +187,19 @@ public class Panel_Organizador{
             } catch (FileNotFoundException ex) {}
     
             try { 
-                buceador_con_hilo= new Buceador_con_hilo(tiburon,piraña,tiburon_negro);
+                buceador=new Buceador();  
             } catch (FileNotFoundException ex) {}
-            Thread thread_bucedor_con_hilo= new Thread(buceador_con_hilo);
-            thread_bucedor_con_hilo.start();
-
+            Thread thread_bucedor= new Thread(buceador);
+            thread_bucedor.start();
+            buceador.actualizar(tiburon, piraña, tiburon_negro);
             textField.setMaxSize(1200, 700);
             imagenView.setFitHeight(700);
             imagenView.setFitWidth(1250);
             
             _gamePane.setStyle("-fx-background-image: url('Dificultad.jpg'); "+ "-fx-background-position: center center; "+ "-fx-background-repeat: stretch;"+"-fx-background-color: blue;");
-            _gamePane.getChildren().setAll(textField,imagenView,tiburon_con_hilo.getCrear_animales_tiburon(),tiburon_con_hilo1.getCrear_animales_tiburon(),buceador_con_hilo.getEtiquetaTextoImagen(),piraña_con_hilo.getCrear_animales_piraña(),piraña_con_hilo1.getCrear_animales_piraña(),tiburon_negro_con_hilo.getCrear_animales_tiburon_negro(),tiburon_negro_con_hilo1.getCrear_animales_tiburon_negro()); 
+            _gamePane.getChildren().setAll(textField,imagenView,tiburones.getTiburon(),buceador.getBuceador(),pirañas.getPiraña(),tiburonNegro.getTiburon_negro()); 
+            sceneJugar = new Scene(_gamePane, 1250, 700);
+            TyperShark.mainStage.setScene(sceneJugar); 
             _gamePane.getChildren().get(0).setOnKeyPressed(new KeyPressed());            
         }
     } 
@@ -219,52 +215,25 @@ public class Panel_Organizador{
     
     private class KeyPressed implements EventHandler<KeyEvent> {
         public void handle(KeyEvent event) {
-            
-            tiburon_con_hilo.palabra_completada(event,0); 
-            tiburon_con_hilo1.palabra_completada(event,0);
-            
-            piraña_con_hilo.palabra_completada(event,1);
-            piraña_con_hilo1.palabra_completada(event,1);
-                        
-            tiburon_negro_con_hilo.palabra_completada(event,2);
-            tiburon_negro_con_hilo1.palabra_completada(event,2);  
+            tiburones.validacion(event);
+            pirañas.validacion(event);
+            tiburonNegro.validacion(event); 
+            buceador.actualizar(tiburon, piraña, tiburon_negro);
         }
     }
     public void cantidad_de_tiburones () throws FileNotFoundException{
-        
-        tiburon_con_hilo = new Animales(0);
-        tiburon_con_hilo1 = new Animales(0);
-        
-        tiburon.add(tiburon_con_hilo);
-        tiburon.add(tiburon_con_hilo1);
-        
-        Thread thread_tiburo_con_hilo= new Thread(tiburon_con_hilo);
-        thread_tiburo_con_hilo.start();
-        Thread thread_tiburo_con_hilo1= new Thread(tiburon_con_hilo1);
-        thread_tiburo_con_hilo1.start();
+        tiburones=new Tiburon();
+        Thread thread_Tiburon = new Thread(tiburones);
+        thread_Tiburon.start();
     }
     public void cantidad_de_pirañas () throws FileNotFoundException{
-        piraña_con_hilo=new Animales(1);
-        piraña_con_hilo1=new Animales(1);
-
-        piraña.add(piraña_con_hilo);
-        piraña.add(piraña_con_hilo1);
-        
-        Thread thread_piraña_con_hilo= new Thread(piraña_con_hilo);
-        thread_piraña_con_hilo.start();
-        Thread thread_piraña_con_hilo1= new Thread(piraña_con_hilo1);
-        thread_piraña_con_hilo1.start();
+        pirañas=new Piraña();
+        Thread thread_Piraña = new Thread(pirañas);
+        thread_Piraña.start();
     }
     public void cantidad_de_tiburones_negros () throws FileNotFoundException{
-        tiburon_negro_con_hilo=new Animales(2);
-        tiburon_negro_con_hilo1=new Animales(2);
-        
-        tiburon_negro.add(tiburon_negro_con_hilo);
-        tiburon_negro.add(tiburon_negro_con_hilo1);
-       
-        Thread thread_tiburon_negro_con_hilo= new Thread(tiburon_negro_con_hilo);
-        thread_tiburon_negro_con_hilo.start();
-        Thread thread_tiburon_negro_con_hilo1= new Thread(tiburon_negro_con_hilo1);
-        thread_tiburon_negro_con_hilo1.start();
+        tiburonNegro=new TiburonNegro();
+        Thread thread_Tiburon_Negro = new Thread(tiburonNegro);
+        thread_Tiburon_Negro.start();
     }
 }
