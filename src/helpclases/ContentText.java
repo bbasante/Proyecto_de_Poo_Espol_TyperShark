@@ -24,7 +24,7 @@ public class ContentText {
     
     ArrayList<String> texto;
     
-    public ContentText(boolean tex){
+    public ContentText(boolean tex, String ruta){
       
       texto = new ArrayList<>();
         
@@ -34,7 +34,7 @@ public class ContentText {
         BufferedReader br = null; 
 
         try {
-           archivo = new File ("palabras.txt");
+           archivo = new File (ruta);
            fr = new FileReader (archivo);
            br = new BufferedReader(fr);
 

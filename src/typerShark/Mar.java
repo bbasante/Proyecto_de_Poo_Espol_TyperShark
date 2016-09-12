@@ -9,11 +9,13 @@ import helpclases.Const;
 import helpclases.Figura;
 import helpclases.ContentText;
 import Animales.AnimalMarino;
+import Animales.Ballena;
 import Animales.Tiburon;
 import Animales.TiburonNegro;
 import Animales.Piraña;
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,14 +38,16 @@ public class Mar {
     //poder obtener el contenido aleatorio que proporciona
     
     ContentText caracteres;// proporcionara los caracteres a las pirañas
-    ContentText palabras;// proporcionara las palabras a los tiburones     
+    ContentText palabras;// proporcionara las palabras a los tiburones  
+    ContentText pballena;
     int nivel;
    
     public Mar(int dificultad, String jugador){
         this.buceador = new Buceador(jugador,Const.RIMGBUCEADOR);
         this.buceador.setMar(this);
-        caracteres = new ContentText(false);
-        palabras = new ContentText(true);
+        caracteres = new ContentText(false,"palabras.txt");
+        palabras = new ContentText(true,"palabras.txt");
+        pballena = new ContentText(true,"ballena.txt");
         nivel=1;
         animales = new ArrayList<>();
         hilos =  new ArrayList<>();
@@ -57,6 +61,9 @@ public class Mar {
         int cantPirañas = Const.DIFICULTAD[dificultad][0];
         int canttiburones = Const.DIFICULTAD[dificultad][1];
         int canttnegros = Const.DIFICULTAD[dificultad][2];
+        int cantballenas = Const.DIFICULTAD[dificultad][3];
+        
+        System.out.println(cantballenas);
         
         for(int i=0;i<cantPirañas;i++){
            this.animales.add(new Piraña(buceador,caracteres));
@@ -68,6 +75,10 @@ public class Mar {
         
         for(int i=0;i<canttnegros;i++){
            this.animales.add(new TiburonNegro(buceador,palabras));
+        }
+        
+        for(int i=0;i<cantballenas;i++){
+           this.animales.add(new Ballena(buceador,pballena));
         }
     }
     
@@ -135,6 +146,18 @@ public class Mar {
                 }
                 
                 if(tmpword.equals("")){// si ya esta vacia, procedo a reiniciar y a curar.
+                    
+                    if(tmp.get(i) instanceof Ballena){
+                        for(int j=0;j<this.animales.size();j++){
+                            if(this.animales.get(j) instanceof TiburonNegro){
+                                TiburonNegro tmb = (TiburonNegro)this.animales.get(j);
+                                tmb.mataronBallena();
+                                
+                            }
+                        }
+                        
+                    }
+                    
                     tmp.get(i).reiniciar();
                     this.recuperar();
                     this.buceador.setPuntaje(this.buceador.getPuntaje() + Const.PUNTOS);

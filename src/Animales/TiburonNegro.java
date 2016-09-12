@@ -37,6 +37,14 @@ public class TiburonNegro extends Tiburon {
         actualreset = 0;
     }
     
+    public void mataronBallena(){
+        this.figura.SetposicionX(Const.WIDTHSCREEN);
+        this.figura.RandonPosicionY();
+        this.reset(); 
+        this.before = this.figura.getPalabra();
+    }
+    
+    
     @Override
     public void reiniciar(){
         actualreset++;
