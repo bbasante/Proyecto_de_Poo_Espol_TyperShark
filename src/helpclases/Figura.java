@@ -27,7 +27,6 @@ import javafx.scene.text.Font;
  * 
  */
 public class Figura {
-    
     Label imgfigura;
     Label palabra;
     ImageView forma;
@@ -38,18 +37,14 @@ public class Figura {
         forma = new ImageView(imganimal);
         this.imgfigura = new Label();
         this.imgfigura.setGraphic(forma);
-        
         this.palabra = new Label(palabra);
         this.palabra.setAlignment(Pos.CENTER);
         this.palabra.setStyle("-fx-background-color: #000;\n" + 
                                  "-fx-background-radius: 30; -fx-opacity: 0.6; -fx-font-family: \"Segoe UI Light\";" );
-        
         this.palabra.setFont(new Font(20.0));
-        this.palabra.setTextFill(Color.web("#fff"));
-        
+        this.palabra.setTextFill(Color.web("#fff"));       
     }
 
-    
     public void MoverEnX(int x){
         this.imgfigura.setTranslateX(this.imgfigura.getTranslateX()- x);
         this.palabra.setTranslateX(this.palabra.getTranslateX()- x);
@@ -115,6 +110,4 @@ public class Figura {
     public double getHeigth(){
         return this.forma.getImage().getHeight();
     }
-    
-    
 }

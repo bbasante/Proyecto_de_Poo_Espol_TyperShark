@@ -25,8 +25,7 @@ public class AnimalMarino implements Runnable {
     Buceador buceador;// se debe tener la referencia al buceador para poder quitarle vidas si lo alcanzo
     boolean ataque; // sirve para que el animal solo ataque una vez cada vez que su posicion es igual o pasó al buceador 
     String before; // la palabra que tenia antes de que empezaran a tipearlo(Matarlo) si el no era el objetivo, revive
-    
-    
+
     public AnimalMarino(int velocidad,String ruta, ContentText words,Buceador buceador){
         this.MyWords = words; 
         this.velocidad = velocidad;
@@ -35,13 +34,10 @@ public class AnimalMarino implements Runnable {
         this.figura.RandonPosicionY();
         this.figura.SetposicionX(Const.WIDTHSCREEN); //posicion de inicio, final de pantalla
         this.buceador=buceador;
-        this.ataque = false;
-        
-        
+        this.ataque = false; 
     }
 
     public AnimalMarino() {
-    
     }
     
     /*
@@ -55,7 +51,6 @@ public class AnimalMarino implements Runnable {
              Platform.runLater(new Runnable(){
                  @Override public void run() {
                       figura.MoverEnX(velocidad);
-                    
                       if(buceador.getFigura().getWidth()>figura.getPosicionX() && ataque==false){
                           Morder();
                           ataque = true;
@@ -63,32 +58,20 @@ public class AnimalMarino implements Runnable {
                       if(figura.getPosicionX()<(-1*figura.getWidth())){
                          reiniciar();
                          ataque=false;
-                      }   
-                         
+                      }      
                     }
-
-
              });
-
             try{
               Thread.sleep(50);
             }catch(InterruptedException e){} 
-       }
-       
-       
+       } 
     }
-    
-    
     /*reubica en x al animal, le da una posicion random en y reset le da una nueva palabra y guardo la misma en before*/
     public void reiniciar(){
-        
             this.figura.SetposicionX(Const.WIDTHSCREEN);
             this.figura.RandonPosicionY();
             this.reset();
-            this.before = this.figura.getPalabra();
-            
-            
-            
+            this.before = this.figura.getPalabra(); 
     }
     
     public void Morder(){
@@ -122,13 +105,10 @@ public class AnimalMarino implements Runnable {
     public void setBuceador(Buceador buceador) {
         this.buceador = buceador;
     }
-    
-    
+
     //siempre tipeamos y sin darnos cuenta hay palabras iguales, entonces yo como animal digo, si no era mi palabra 
     //no me mataron entonces revivo. 
     public void revivir(){
         this.figura.setPalabra(this.before);
     }
-    
-    
 }

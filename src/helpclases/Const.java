@@ -13,8 +13,7 @@ public final class Const {
    
     public static final int WIDTHSCREEN = 1200;
     public static final int HEIGHTSCREEN = 650;
-    
-   
+
     public static final int VINICIALPIRAÑA = 2;
     public static final int VINICIALTIBURON = 1;
     public static final int VINICIALTNEGRO = 1;

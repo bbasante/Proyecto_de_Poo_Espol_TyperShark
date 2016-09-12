@@ -22,27 +22,21 @@ import java.util.Random;
  */
 public class ContentText {
     
-    ArrayList<String> texto;
-    
+    ArrayList<String> texto; 
     public ContentText(boolean tex, String ruta){
-      
-      texto = new ArrayList<>();
-        
+      texto = new ArrayList<>(); 
       if(tex==true){  
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null; 
-
         try {
            archivo = new File (ruta);
            fr = new FileReader (archivo);
            br = new BufferedReader(fr);
-
            String linea;
            while((linea=br.readLine())!=null)
              texto.add(linea);
            }
-
         catch(Exception e){
            e.printStackTrace();
         }finally{
@@ -53,32 +47,19 @@ public class ContentText {
            }catch (Exception e2){ 
               e2.printStackTrace();
            }
-        }
-        
-      }
-      
-      else{
-          
+        }       
+      }    
+      else{       
          String letras = "abcdefghijklnñopqrstuvwxyz";
          for(int i=0;i<letras.length();i++){
              texto.add("" + letras.charAt(i));
-         }
-          
-          
+         }  
       }
    }
-        
-        
-    
-    public String getRandomContent(){
-        
+    public String getRandomContent(){        
         int indice;
         Random rnd = new Random();
         indice = (int)(rnd.nextDouble() * (texto.size()-1));
-        return texto.get(indice);
-        
-    }
-    
-    
-    
+        return texto.get(indice);       
+    } 
 }

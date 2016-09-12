@@ -18,6 +18,4 @@ public class Ballena extends AnimalMarino {
      public Ballena(Buceador buceador ,ContentText contBallena){
         super((Const.VINICIALPIRAÑA+Const.VINICIALTIBURON+Const.VINICIALTNEGRO)/3,Const.RIMBALLENA,contBallena,buceador);   
     }
-     
-     
 }

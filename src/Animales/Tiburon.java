@@ -15,7 +15,6 @@ import helpclases.ContentText;
  * hereda de animalMarino y sigue a rajatabla su modelo, no fue necesario sobreescribir algun metodo.
  */
 public class Tiburon extends AnimalMarino {
-    
     public Tiburon(Buceador buceador ,ContentText contTiburon){
         super(Const.VINICIALTIBURON,Const.RIMGTIBURON,contTiburon,buceador);
     }
@@ -27,5 +26,4 @@ public class Tiburon extends AnimalMarino {
     public String getPalabra(){
         return super.figura.getPalabra();
     }
-    
 }

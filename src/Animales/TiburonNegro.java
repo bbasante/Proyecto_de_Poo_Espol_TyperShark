@@ -28,8 +28,6 @@ import helpclases.ContentText;
 public class TiburonNegro extends Tiburon {
     int cantreset;
     int actualreset;
-    
-    
     public TiburonNegro(Buceador buceador ,ContentText contTiburon){
         super(Const.VINICIALTNEGRO,Const.RIMGTNEGRO,contTiburon,buceador);
         Random rnd = new Random();
@@ -43,33 +41,22 @@ public class TiburonNegro extends Tiburon {
         this.reset(); 
         this.before = this.figura.getPalabra();
     }
-    
-    
+
     @Override
     public void reiniciar(){
         actualreset++;
-        
-        
+
         if(figura.getPosicionX()<(-1*figura.getWidth()) || 
                                  cantreset==actualreset || super.buceador.fondoMar()){
-            
-            
-            
-            
-            
             this.figura.SetposicionX(Const.WIDTHSCREEN);
             this.figura.RandonPosicionY();
             this.reset();
             this.before = this.figura.getPalabra();
             actualreset=1;
-            
-            
         }
         else if(cantreset>actualreset){
             this.reset();
             this.before = this.figura.getPalabra();
         }
-    }
-    
-    
+    }   
 }

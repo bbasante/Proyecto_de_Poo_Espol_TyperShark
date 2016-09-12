@@ -15,7 +15,6 @@ import Animales.TiburonNegro;
 import Animales.Piraña;
 import java.util.ArrayList;
 import javafx.scene.layout.Pane;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,12 +26,7 @@ import javax.swing.JOptionPane;
 public class Mar {
     ArrayList<AnimalMarino> animales; // lista de todos mis animales
     ArrayList<Thread> hilos;// hilos en donde se ubicaron a los animales
-    
-    
-    
     Buceador buceador;// El mar conoce que buceador esta en el
-    
-    
     //cada animal tiene internamente un ContenText, por esa razon fueron creadas aqui para enviar tan solo una referencia
     //a cada animal y que no se tenga que crear un Contentex por cada animal, pues al final, solo se desea+
     //poder obtener el contenido aleatorio que proporciona
@@ -62,31 +56,24 @@ public class Mar {
         int canttiburones = Const.DIFICULTAD[dificultad][1];
         int canttnegros = Const.DIFICULTAD[dificultad][2];
         int cantballenas = Const.DIFICULTAD[dificultad][3];
-        
-        System.out.println(cantballenas);
-        
+
         for(int i=0;i<cantPirañas;i++){
            this.animales.add(new Piraña(buceador,caracteres));
-        }
-        
+        } 
         for(int i=0;i<canttiburones;i++){
            this.animales.add(new Tiburon(buceador,palabras));
-        }
-        
+        }        
         for(int i=0;i<canttnegros;i++){
            this.animales.add(new TiburonNegro(buceador,palabras));
-        }
-        
+        }      
         for(int i=0;i<cantballenas;i++){
            this.animales.add(new Ballena(buceador,pballena));
         }
     }
     
     //guarda y le da star a los run() a los animales
-    public void start(){
-        
+    public void start(){ 
         hilos.add(new Thread(this.buceador));
-        
         for(int i=0;i<this.animales.size();i++){
             hilos.add(new Thread(this.animales.get(i)));
         }
@@ -101,35 +88,24 @@ public class Mar {
         
         for(int i=0;i<this.animales.size();i++){
             tmp = this.animales.get(i);
-            
             if(tmp instanceof Piraña){
                 tmp.setVelocidad(Const.VINICIALPIRAÑA + Const.UPVELOCITY*this.nivel);
             }
-            
             if(tmp instanceof Tiburon){
                 tmp.setVelocidad(Const.VINICIALTIBURON + Const.UPVELOCITY*this.nivel);
             }
-            
             if(tmp instanceof TiburonNegro){
                 tmp.setVelocidad(Const.VINICIALTNEGRO + Const.UPVELOCITY*this.nivel);
             }
         }   
-        
         this.nivel++;
     }
-    
-    
-    
-    
-    
+
     /*
     recibe una letra siempre y busca los animales que empiecen con la misma
     luego a cada animal le elimina dicha letra que siempre sera la inicial
     y la va borrando del animal una vez que alguno llegue a no tener mas letras
     entonces este sera reiniciado, y los demas que no eran el objetivo son recuperados.
-    
-    
-    
     */
     public void MatarAnimal(String texto){
         ArrayList<AnimalMarino> tmp = this.Buscar(texto);
@@ -139,41 +115,27 @@ public class Mar {
         if(tmp!=null){
             for(int i=0;i<tmp.size() ;i++){
                 tmpword = tmp.get(i).getFigura().getPalabra(); 
-                
                 if(!tmpword.equals("")){//si no esta vacia le elimino un caracter
                     tmpword = tmpword.substring(1);
                     tmp.get(i).getFigura().setPalabra(tmpword);
                 }
-                
-                if(tmpword.equals("")){// si ya esta vacia, procedo a reiniciar y a curar.
-                    
+                if(tmpword.equals("")){// si ya esta vacia, procedo a reiniciar y a curar.  
                     if(tmp.get(i) instanceof Ballena){
                         for(int j=0;j<this.animales.size();j++){
                             if(this.animales.get(j) instanceof TiburonNegro){
                                 TiburonNegro tmb = (TiburonNegro)this.animales.get(j);
-                                tmb.mataronBallena();
-                                
+                                tmb.mataronBallena(); 
                             }
-                        }
-                        
+                        } 
                     }
-                    
                     tmp.get(i).reiniciar();
                     this.recuperar();
                     this.buceador.setPuntaje(this.buceador.getPuntaje() + Const.PUNTOS);
-                }
-                
-            }
-            
-           
-              
-        }
-        
-         
-        
+                }  
+            }  
+        }  
     }
-    
-    
+
     // elimina a todos los animales
     public boolean MatarTodos(){
         if(this.buceador.getPuntaje()>100){
@@ -184,28 +146,20 @@ public class Mar {
         }
         return false;
     }
-    
-    
+
     // se encarga de buscar una lista de todos los animales que empiezan con el texto enviado
     public ArrayList<AnimalMarino> Buscar(String texto){
         String tmp;
-        
-        
-        
         ArrayList<AnimalMarino> coincidencias = new ArrayList<>();
          for(int i=0;i<this.animales.size();i++){
              tmp = this.animales.get(i).getFigura().getPalabra();
              if(tmp.startsWith(texto.toLowerCase()) || tmp.startsWith(texto.toUpperCase()) ){
                  coincidencias.add(this.animales.get(i));
              }
-             
          }
-        
         return coincidencias;
     }
-    
-    
-    
+
     //añade a un panel todas los elementos de los animales como los labels y las imagenes.
     public void addInPanel(Pane panel){
         panel.getChildren().add(this.buceador.getFigura().getImgfigura());
@@ -225,8 +179,4 @@ public class Mar {
     public Buceador getBuceador() {
         return buceador;
     }
-    
-    
-    
-    
 }
