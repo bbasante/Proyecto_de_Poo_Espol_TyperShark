@@ -8,26 +8,38 @@ package typerShark;
 import helpclases.Const;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author User
+ * @author basantes
  */
 public class PaneOrganizer {
     Pane root;
     Buceador buceador;
     Mar mar;
-    public PaneOrganizer() throws InterruptedException{     
+    String nombre;
+    public PaneOrganizer(String name){
+        
+    }
+    
+    public PaneOrganizer() throws InterruptedException{
+        
         root = new Pane();
-         root.setStyle("-fx-background-image: url('" + Const.RIMGFONDO + "'); "
+        root.setStyle("-fx-background-image: url('" + Const.RIMGFONDO + "'); "
            + "-fx-background-position: center center; "
-           + "-fx-background-repeat: stretch;");       
-        mar = new Mar(0,"jorge"); 
+           + "-fx-background-repeat: stretch;");
+        nombre=JOptionPane.showInputDialog("Introduce tu nombre nombre: ");
+        //JOptionPane.showMessageDialog(null, "Tu nombre es: "+nombre);
+        mar = new Mar(0,nombre); 
         mar.addInPanel(root);
-        buceador = mar.getBuceador();   
+        buceador = mar.getBuceador();
+  
     }
 
     public Pane getRoot() {
@@ -49,7 +61,8 @@ public class PaneOrganizer {
      private class ControlIn implements EventHandler<KeyEvent> {
 
          @Override
-            public void handle(KeyEvent event) {               
+            public void handle(KeyEvent event) {
+                
                 if(event.getCode().equals(KeyCode.ENTER)) {
                     if(buceador.getPuntaje()> Const.PUNTOSNECESARIOS){
                         mar.MatarTodos();
@@ -59,6 +72,6 @@ public class PaneOrganizer {
                 else{
                     mar.MatarAnimal(event.getText());
                 }
-            }  
-    }   
+            }
+    }  
 }

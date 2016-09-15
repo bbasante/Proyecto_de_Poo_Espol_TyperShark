@@ -11,7 +11,7 @@ import typerShark.Buceador;
 
 /**
  *
- * @author Administrador
+ * @author basantes
  */
 public class Ballena extends AnimalMarino {
     

@@ -13,7 +13,7 @@ import helpclases.ContentText;
 
 /**
  *
- * @author User
+ * @author basantes
  * tiene un canreset=puedo reiniciar? y un actualreset=cuantas veces me he recinicado.
  * al reiniciar, el contador actualreset aumenta y luego se verifica si mi tiburon negro no este afuera
  * de los limites de la pantalla o si llego a su maxima capacidad para reiniciarse y si esta al fondo del mar

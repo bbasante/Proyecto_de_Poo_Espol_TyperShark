@@ -36,6 +36,7 @@ public final class Const {
     public static final String RIMBALLENA = "balle.png";
     
     public static final String RIMGFONDO = "fondo.png";
+    public static final String RIMGFONDOMAR = "fondo_de_mar.gif";
     
     public static final int[][] DIFICULTAD = {{1,2,1,1},
                                               {2,3,2,1},
