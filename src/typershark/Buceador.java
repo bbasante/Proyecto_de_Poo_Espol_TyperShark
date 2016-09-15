@@ -3,143 +3,184 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package typershark;
+package typerShark;
 
-import java.io.FileNotFoundException;
+import helpclases.Const;
+import helpclases.Estadisticas;
+import helpclases.Figura;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
-import javafx.scene.control.ContentDisplay;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 
 /**
  *
  * @author basantes
+ * esta clase va a mandar en el juego si las vidas llegan a 0 el juego termina.
+ * 
+ * 
  */
-public class Buceador implements Runnable{
-    private Label buceador;
-    private int numero=250;
-    private int posicionX=1200;
+public class Buceador implements Runnable, Serializable{
+    String Nombre;
+    Figura figura;
+    Mar mar; // es necesario que el buceador conozca el Mar porque cuando el llega al fondo del mismo lo hace subir al siguiente nivel.
+    int picpiraña;
+    int vidas;
+    int puntaje;
+    boolean nextLevel;
+    private int Bomba;
+    HashMap<String,Integer> texto;
+    private Label Visto = new Label();
+    private Button Guardar = new Button ("Guardar");
+    Estadisticas estadisticas;
+    public Buceador(String Nombre, String ruta) {
+        
+        this.figura=new Figura(ruta,"");
+        this.figura.SetposicionX(0);
+        this.figura.SetposicionY(0);
+        
+        this.Nombre = Nombre;
+        this.vidas=3;
+        this.puntaje=0;
+        this.nextLevel = false;
+        
+    }
 
-    private ArrayList <Tiburon> tiburon ;
-    private ArrayList <Piraña> piraña;
-    private ArrayList <TiburonNegro> tiburon_negro ;
-    private int vidas_del_buceador =3, acumulador_pirañas=0;
+    public int getPicpiraña() {
+        return picpiraña;
+    }
+
+    public void setPicpiraña(int picpiraña) {
+        this.picpiraña = picpiraña;
+    }
     
-    public Buceador() throws FileNotFoundException {
-        buceador=Jugador();
+    
+
+    public String getNombre() {
+        return Nombre;
     }
-    public void actualizar(ArrayList <Tiburon> tiburon, ArrayList <Piraña> piraña,ArrayList <TiburonNegro> tiburon_negro){
-        this.tiburon=tiburon;
-        this.piraña=piraña;
-        this.tiburon_negro=tiburon_negro;
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
     }
-    public void run (){
-        while(true){
-            buceador.setTranslateX(0);
-            buceador.setTranslateY(numero);
-            numero++;
-            this.Vidas();           
-            if(numero==650){
-                numero=250;
-            }            
-            try{
-                Thread.sleep(1000);
-            }catch(InterruptedException ex){}
-        }
+
+    public int getVidas() {
+        return vidas;
     }
-    public void Vidas() {
-        for(Tiburon mostrar:getTiburon()){
-            if(mostrar.getTiburon().getTranslateX()<70){
-                vidas_del_buceador--;
-                System.out.println("Tiburon - Usted le quedan vidas: " +vidas_del_buceador);                               
-                if(vidas_del_buceador<0){
-                    try{
-//                        System.exit(0);
-                    }catch (Exception ex){
-                        
+
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
+
+    public Figura getFigura() {
+        return figura;
+    }
+
+    public void setFigura(Figura figura) {
+        this.figura = figura;
+    }
+
+    public boolean NextLevel() {
+        return nextLevel;
+    }
+
+    public void setNextLevel(boolean nextLevel) {
+        this.nextLevel = nextLevel;
+    }
+
+    public Mar getMar() {
+        return mar;
+    }
+
+    public void setMar(Mar mar) {
+        this.mar = mar;
+    }
+    
+    
+    /*se encarga de mover al buceador en Y y si se encuentra en el fondo del mar
+    este avanza al siguiente nivel y si las vidas del mismo llegan a 0 se termina el juego*/
+    @Override
+    public void run() {
+        while(true){  
+             Platform.runLater(new Runnable(){
+                 @Override 
+                 public void run() {
+                    figura.MoverEnY(Const.VBUCEADOR);
+                    if(fondoMar()){
+                        figura.SetposicionY(0);
+                        try {
+                            mar.SiguienteNivel();
+                        } catch (IOException ex) {}
                     }
                     
-                }
-            }
-        }
-        for(Piraña mostrar:getPiraña()){
-            if(mostrar.getPiraña().getTranslateX()<70){
-                acumulador_pirañas++;
-                if(acumulador_pirañas>3){
-                    acumulador_pirañas=0;
-                    vidas_del_buceador--;
-
-                    System.out.println("Piraña - Usted le quedan vidas: " +vidas_del_buceador);                               
-                    if(vidas_del_buceador<0){
-                        try{
-//                            System.exit(0);
-                        }catch (Exception ex){
-
-                        }
+                     
+                    if(vidas==0){
+                        System.exit(0);
                     }
+                     setBomba((int) (getPuntaje())/100);
+                    Visto.setText("Vidas: " + getVidas() + "            " + "Puntaje: " +getPuntaje() + "         " + "Bombas: " + getBomba() + "          " + "Nombre: " +Nombre +"          " + "Nivel: " +mar.getNivel());            
+                    Visto.setStyle("-fx-background-color: Orange;\n"+"    -fx-background-insets: 0;\n" + "-fx-border-color: Red;"+"    -fx-text-fill: white;");
+                    Guardar.setTranslateX(Const.HEIGHTSCREEN);
+                    Guardar.setOnAction(new ClickHandler());
+                 }
+             });
+
+            try{
+              Thread.sleep(100);
+            }catch(InterruptedException e){} 
+       }
+    }
+    
+    public boolean fondoMar(){
+        return this.figura.getPosicionY() >= Const.HEIGHTSCREEN - this.figura.getHeigth();
+    }
+
+    public Label getVisto() {
+        return Visto;
+    }
+
+    public Button getGuardar() {
+        return Guardar;
+    }
+
+    public int getBomba() {
+        return Bomba;
+    }
+
+    public void setBomba(int Bomba) {
+        this.Bomba = Bomba;
+    }
+    private class ClickHandler implements EventHandler<ActionEvent> {
+
+         @Override
+            public void handle(ActionEvent event) {
+             try {
+                 estadisticas=new Estadisticas();
+                 estadisticas.writeRank(getVidas(),getPuntaje(),getBomba(),getNombre(),mar.getNivel());
+                 texto = new HashMap<String,Integer>();
+                 estadisticas.writeTop(estadisticas.readRank(texto)); 
+             } catch (IOException ex) { }
                 }
             }
-        }
-        for(TiburonNegro mostrar:getTiburon_negro()){
-            if(mostrar.getTiburon_negro().getTranslateX()<70){
-                vidas_del_buceador--;
-
-                System.out.println("Tiburon negro - Usted le quedan vidas: " +vidas_del_buceador);                               
-                if(vidas_del_buceador<0){
-                    try{
-//                        System.exit(0);
-                    }catch (Exception ex){
-                        
-                    }
-                }
-            }
-        }
     }
-        public Label Jugador() throws FileNotFoundException{
-        Image Tipo_de_animal= new Image("buceador.gif");
-        ImageView animal_seleccionado= new ImageView(Tipo_de_animal);
-        Label etiquetaTextoImagen = new Label();
-        etiquetaTextoImagen = new Label();
-        etiquetaTextoImagen.setContentDisplay(ContentDisplay.CENTER);
-        etiquetaTextoImagen.setGraphicTextGap(1);
-        etiquetaTextoImagen.setGraphic(animal_seleccionado);
-        return etiquetaTextoImagen;
-    }
-
-    public Label getBuceador() {
-        return buceador;
-    }
-
-    public void setBuceador(Label buceador) {
-        this.buceador = buceador;
-    }
-
-    public ArrayList <Tiburon> getTiburon() {
-        return tiburon;
-    }
-
-    public void setTiburon(ArrayList <Tiburon> tiburon) {
-        this.tiburon = tiburon;
-    }
-
-    public ArrayList <Piraña> getPiraña() {
-        return piraña;
-    }
-
-    public void setPiraña(ArrayList <Piraña> piraña) {
-        this.piraña = piraña;
-    }
-
-    public ArrayList <TiburonNegro> getTiburon_negro() {
-        return tiburon_negro;
-    }
-
-    public void setTiburon_negro(ArrayList <TiburonNegro> tiburon_negro) {
-        this.tiburon_negro = tiburon_negro;
-    }
-}
