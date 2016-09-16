@@ -6,6 +6,8 @@
 package typerShark;
 
 import helpclases.Const;
+import helpclases.Estadisticas;
+import java.io.IOException;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -24,11 +26,9 @@ public class PaneOrganizer {
     Buceador buceador;
     Mar mar;
     String nombre;
-    public PaneOrganizer(String name){
-        
-    }
+    Estadisticas estadisticas=new Estadisticas();
     
-    public PaneOrganizer() throws InterruptedException{
+    public PaneOrganizer() throws InterruptedException, IOException{
         
         root = new Pane();
         root.setStyle("-fx-background-image: url('" + Const.RIMGFONDO + "'); "
@@ -36,10 +36,15 @@ public class PaneOrganizer {
            + "-fx-background-repeat: stretch;");
         nombre=JOptionPane.showInputDialog("Introduce tu nombre nombre: ");
         //JOptionPane.showMessageDialog(null, "Tu nombre es: "+nombre);
+       
         mar = new Mar(0,nombre); 
         mar.addInPanel(root);
         buceador = mar.getBuceador();
-  
+         try{
+            estadisticas.load(nombre, buceador, mar);
+        }catch (IOException ex) { }
+        
+        
     }
 
     public Pane getRoot() {
@@ -73,5 +78,10 @@ public class PaneOrganizer {
                     mar.MatarAnimal(event.getText());
                 }
             }
-    }  
+            
+            
+        
+        
+    }
+    
 }
