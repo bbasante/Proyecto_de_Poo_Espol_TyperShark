@@ -5,37 +5,41 @@
  */
 package typershark;
 
+import helpclases.Const;
+import helpclases.Audio;
+import java.io.IOException;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 
 /**
  *
- * @author USER
+ * @author basantes
  */
-public class TyperShark extends Application
-{
+public class TyperShark extends Application {
+    
+    @Override
+    public void start(Stage stage) throws InterruptedException, IOException {
+        PaneOrganizer panel = new PaneOrganizer();
+        Audio audio = new Audio();
+        new Thread(audio).start();  
+        Scene scene = new Scene(panel.getRoot(),Const.WIDTHSCREEN,Const.HEIGHTSCREEN);
+        panel.listenerKey(scene);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     /**
      * @param args the command line arguments
      */
-    public static Stage mainStage;
-
-    public static void main(String[] args) 
-    {
-        // TODO code application logic here
+    public static void main(String[] args) {
         launch(args);
     }
     
-    @Override
-    public void start (Stage stage) throws Exception
-    {
-        mainStage = stage;
-        Audio audio = new Audio();
-        new Thread(audio).start();  
-        Panel_Organizador panel_organizador = new Panel_Organizador();
-        mainStage.setScene(panel_organizador.getScene());                
-        mainStage.setTitle("TyperShark"); 
-        mainStage.show();
-    }       
 }
