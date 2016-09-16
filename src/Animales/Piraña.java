@@ -5,7 +5,7 @@
  */
 package Animales;
 
-import typerShark.Buceador;
+import TyperShark.Buceador;
 import helpclases.Const;
 import helpclases.ContentText;
 

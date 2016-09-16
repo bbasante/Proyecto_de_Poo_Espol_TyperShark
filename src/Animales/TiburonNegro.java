@@ -7,7 +7,7 @@ package Animales;
 
 
 import java.util.Random;
-import typerShark.Buceador;
+import TyperShark.Buceador;
 import helpclases.Const;
 import helpclases.ContentText;
 
