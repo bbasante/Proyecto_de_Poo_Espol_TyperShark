@@ -28,8 +28,7 @@ public class PaneOrganizer {
     String nombre;
     Estadisticas estadisticas=new Estadisticas();
     
-    public PaneOrganizer() throws InterruptedException, IOException{
-        
+    public PaneOrganizer() throws InterruptedException, IOException{       
         root = new Pane();
         root.setStyle("-fx-background-image: url('" + Const.RIMGFONDO + "'); "
            + "-fx-background-position: center center; "
