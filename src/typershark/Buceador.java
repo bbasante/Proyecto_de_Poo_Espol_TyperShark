@@ -177,9 +177,9 @@ public class Buceador implements Runnable, Serializable{
             public void handle(ActionEvent event) {
              try {
                  estadisticas=new Estadisticas();
-                 estadisticas.writeRank(getVidas(),getPuntaje(),getBomba(),getNombre(),mar.getNivel());
+                 estadisticas.writeTop(getVidas(),getPuntaje(),getBomba(),getNombre(),mar.getNivel());
                  texto = new HashMap<String,Integer>();
-                 estadisticas.writeTop(estadisticas.readRank(texto)); 
+                 estadisticas.writeRank(estadisticas.readTop(texto)); 
              } catch (IOException ex) { }
                 }
             }
