@@ -56,7 +56,6 @@ public class Buceador implements Runnable, Serializable{
         this.vidas=3;
         this.puntaje=0;
         this.nextLevel = false;
-        
     }
 
     public int getPicpiraña() {
