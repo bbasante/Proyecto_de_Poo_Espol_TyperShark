@@ -241,6 +241,10 @@ public class Mar {
     public int getNivel() {
         return nivel;
     }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
     
     
     
