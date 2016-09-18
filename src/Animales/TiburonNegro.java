@@ -13,7 +13,7 @@ import helpclases.ContentText;
 
 /**
  *
- * @author basantes
+ * @author User
  * tiene un canreset=puedo reiniciar? y un actualreset=cuantas veces me he recinicado.
  * al reiniciar, el contador actualreset aumenta y luego se verifica si mi tiburon negro no este afuera
  * de los limites de la pantalla o si llego a su maxima capacidad para reiniciarse y si esta al fondo del mar
@@ -26,28 +26,33 @@ import helpclases.ContentText;
  * 
  */
 public class TiburonNegro extends Tiburon {
-    private int cantreset;
-    private int actualreset;
-    public TiburonNegro(Buceador buceador ,ContentText contTiburon){
+    int cantreset;
+    int actualreset;
+    
+    
+    public TiburonNegro(Buceador buceador ,ContentText contTiburon)
+    {
         super(Const.VINICIALTNEGRO,Const.RIMGTNEGRO,contTiburon,buceador);
         Random rnd = new Random();
         cantreset = (int)(rnd.nextDouble() * 1 + 2); // aqui se decide cuantas veces se puede reiniciar
         actualreset = 0;
     }
     
-    public void mataronBallena(){
+    public void mataronBallena()
+    {
         this.figura.SetposicionX(Const.WIDTHSCREEN);
         this.figura.RandonPosicionY();
         this.reset(); 
         this.before = this.figura.getPalabra();
     }
-
+    
     @Override
-    public void reiniciar(){
+    public void reiniciar()
+    {
         actualreset++;
-
-        if(figura.getPosicionX()<(-1*figura.getWidth()) || 
-                                 cantreset==actualreset || super.buceador.fondoMar()){
+        
+        if(figura.getPosicionX()<(-1*figura.getWidth()) || cantreset==actualreset || super.buceador.fondoMar())
+        {
             this.figura.SetposicionX(Const.WIDTHSCREEN);
             this.figura.RandonPosicionY();
             this.reset();
@@ -56,18 +61,23 @@ public class TiburonNegro extends Tiburon {
             Random rnd = new Random();
             setCantreset((int)(rnd.nextDouble() * 1 + 2));
         }
-        else if(cantreset>actualreset){
-            this.reset();
-            this.before = this.figura.getPalabra();
+        else 
+        {
+            if(cantreset>actualreset)
+            {
+                this.reset();
+                this.before = this.figura.getPalabra();
+            }
         }
-            
-    }   
-
-    public void setCantreset(int cantreset) {
+    }
+    
+    public void setCantreset(int cantreset) 
+    {
         this.cantreset = cantreset;
     }
 
-    public void setActualreset(int actualreset) {
+    public void setActualreset(int actualreset) 
+    {
         this.actualreset = actualreset;
     }
 }

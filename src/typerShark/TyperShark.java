@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package typershark;
+package typerShark;
 
 import helpclases.Const;
 import helpclases.Audio;

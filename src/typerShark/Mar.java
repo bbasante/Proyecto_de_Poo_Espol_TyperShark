@@ -35,7 +35,7 @@ public class Mar {
 
     //Button Guardar = new Button ("Guardar"), Puntaje = new Button ("Puntaje"), Bomba = new Button ("Bomba");
     
-    Buceador buceador;// El mar conoce que buceador esta en el
+    typerShark.Buceador buceador;// El mar conoce que buceador esta en el
     String nombre;
     Estadisticas estadisticas;
     //cada animal tiene internamente un ContenText, por esa razon fueron creadas aqui para enviar tan solo una referencia
@@ -47,7 +47,7 @@ public class Mar {
     ContentText pballena;
     private int nivel;
     public Mar(int dificultad, String jugador){
-        this.buceador = new Buceador(jugador,Const.RIMGBUCEADOR);
+        this.buceador = new typerShark.Buceador(jugador,Const.RIMGBUCEADOR);
         this.buceador.setMar(this);
         this.nombre=jugador;
         caracteres = new ContentText(false,"palabras.txt");
@@ -102,11 +102,9 @@ public class Mar {
     // se encarga de darle mas velocidad a todos los animales
     public void SiguienteNivel() throws IOException{
         estadisticas=new Estadisticas();
+        
         estadisticas.writeNivel(nivel,buceador.getNombre(),buceador.getPuntaje());
-        
-        
-        
-        
+
         AnimalMarino tmp;
         
         for(int i=0;i<this.animales.size();i++){
@@ -235,7 +233,7 @@ public class Mar {
         }
     }
 
-    public Buceador getBuceador() {
+    public typerShark.Buceador getBuceador() {
         return buceador;
     }
 
