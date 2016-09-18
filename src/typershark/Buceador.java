@@ -42,7 +42,7 @@ public class Buceador implements Runnable, Serializable{
     int puntaje;
     boolean nextLevel;
     private int Bomba;
-    HashMap<String,Integer> texto;
+    
     private Label Visto = new Label();
     private Button Guardar = new Button ("Guardar");
     Estadisticas estadisticas;
@@ -56,6 +56,7 @@ public class Buceador implements Runnable, Serializable{
         this.vidas=3;
         this.puntaje=0;
         this.nextLevel = false;
+        
     }
 
     public int getPicpiraña() {
@@ -177,8 +178,7 @@ public class Buceador implements Runnable, Serializable{
              try {
                  estadisticas=new Estadisticas();
                  estadisticas.writeTop(getVidas(),getPuntaje(),getBomba(),getNombre(),mar.getNivel());
-                 texto = new HashMap<String,Integer>();
-                 estadisticas.writeRank(estadisticas.readTop(texto)); 
+                 estadisticas.writeRank(estadisticas.readTop()); 
              } catch (IOException ex) { }
                 }
             }
