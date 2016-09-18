@@ -1,1 +1,10 @@
-Test,40
+Samsung,1120
+Chepina,460
+Francisco,420
+Geokuda,380
+Tartamudo,380
+bolbasor,380
+esteretotipo,360
+francia,360
+Panchito,340
+rodolfo,340

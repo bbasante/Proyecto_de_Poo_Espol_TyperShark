@@ -1,0 +1,10 @@
+Samsung,1120
+Chepina,940
+hi,640
+Geokuda,480
+Espol,440
+Panchito,400
+Tartamudo,380
+esteretotipo,360
+francia,360
+Prueba,300
