@@ -17,36 +17,23 @@ import javazoom.jl.player.Player;
  *
  * @author basantes
  */
-
-public class Audio extends Task<Player>
-{   
+public class Audio extends Task<Player>{ 
     Player player ;
-    
-    public Audio()
-    {
+    public Audio(){
         
     }
-    
     @Override
-    protected Player call() throws Exception 
-    {
-    try 
-    {
-        //File file = new File("C:\\Users\\basantes\\Documents\\NetBeansProjects\\TyperShark\\src\\Kalimba.MP3");
-        File file = new File("src/Kalimba.MP3");
-        FileInputStream fileInputStream = new FileInputStream(file);
-        BufferedInputStream bufferInputStream = new BufferedInputStream(fileInputStream);
-        try
-        {
-            player = new Player(bufferInputStream);
-            player.play();
-        }
-        catch(JavaLayerException ex)
-        {   
-        }
-        }
-        catch(IOException e)
-        {
+    protected Player call() throws Exception {
+    try {
+            File file = new File("C:\\Users\\basantes\\Documents\\NetBeansProjects\\TyperShark\\src\\Kalimba.MP3");
+            FileInputStream fileInputStream = new FileInputStream(file);
+            BufferedInputStream bufferInputStream = new BufferedInputStream(fileInputStream);
+            try{
+                player = new Player(bufferInputStream);
+                player.play();
+            }catch(JavaLayerException ex){   
+            }
+        }catch(IOException e){
         }
         return player;
     }

@@ -5,18 +5,16 @@
  */
 package Animales;
 
-import typerShark.Buceador;
 import helpclases.Const;
 import helpclases.ContentText;
+import typerShark.Buceador;
 
 /**
  *
- * @author jose.martin
+ * @author Administrador
  */
-public class Ballena extends AnimalMarino 
-{   
-    public Ballena(Buceador buceador ,ContentText contBallena)
-    {
-        super((Const.VINICIALPIRAÑA+Const.VINICIALTIBURON+Const.VINICIALTNEGRO)/3,Const.RIMGBALLENA,contBallena,buceador);   
-    }
+public class Ballena extends AnimalMarino {
+     public Ballena(Buceador buceador ,ContentText contBallena){
+        super((Const.VINICIALPIRAÑA+Const.VINICIALTIBURON+Const.VINICIALTNEGRO)/3,Const.RIMBALLENA,contBallena,buceador);   
+    } 
 }

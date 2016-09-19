@@ -14,20 +14,14 @@ import helpclases.ContentText;
  * @author User
  * hereda de animalMarino y sigue a rajatabla su modelo, no fue necesario sobreescribir algun metodo.
  */
-public class Tiburon extends AnimalMarino
-{   
-    public Tiburon(Buceador buceador ,ContentText contTiburon)
-    {
+public class Tiburon extends AnimalMarino {
+    public Tiburon(Buceador buceador ,ContentText contTiburon){
         super(Const.VINICIALTIBURON,Const.RIMGTIBURON,contTiburon,buceador);
     }
-    
-    public Tiburon(int velocidad,String ruta,ContentText contTiburon,Buceador buceador)
-    {
+    public Tiburon(int velocidad,String ruta,ContentText contTiburon,Buceador buceador ){
         super(velocidad,ruta,contTiburon,buceador);
     }
-    
-    public String getPalabra()
-    {
+    public String getPalabra(){
         return super.figura.getPalabra();
     }
 }

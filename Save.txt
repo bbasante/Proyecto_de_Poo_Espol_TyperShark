@@ -31,9 +31,11 @@ delincuente,3,0,0,1
 Samsung,3,780,11,1
 Espol,3,440,4,2
 mejorado,3,0,0,1
+Alelulya,3,20,0,1
 a,3,60,0,1
 jose,3,0,0,1
 Alfredo,3,0,0,1
+Martin,1,960,9,4
 Bryan123,3,0,0,1
 qaz,3,0,0,1
 francia,3,360,3,2

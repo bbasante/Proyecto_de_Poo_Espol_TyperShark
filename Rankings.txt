@@ -31,9 +31,11 @@ delincuente,20
 Samsung,1120
 Espol,440
 mejorado,60
+Alelulya,20
 a,80
 jose,20
 Alfredo,20
+Martin,960
 Bryan123,0
 qaz,40
 francia,360

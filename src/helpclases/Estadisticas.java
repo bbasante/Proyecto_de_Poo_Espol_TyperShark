@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import javax.swing.JOptionPane;
 import typerShark.Buceador;
 import typerShark.Mar;
 
@@ -23,24 +24,17 @@ import typerShark.Mar;
  * @author basantes
  */
 public class Estadisticas {
-    
     public Estadisticas() {
     }
      public void writeTop(int getVidas,int getPuntaje,int getBomba,String getNombre, int getNivel) throws IOException{
-         File archivo=new File("Top.txt");
-         FileWriter escribir =new FileWriter(archivo,true);
-
+         FileWriter escribir =new FileWriter(new File("Top.txt"),true);
          escribir.write(getVidas+","+getPuntaje+","+getBomba+","+getNombre+","+getNivel);
          escribir.write("\r\n");
          escribir.close();
      }
      public void writeRank(HashMap<String,Integer> texto) throws IOException{
-                File archivo=new File("Rankings.txt");
-                File file= new File("Rankings_top_10.txt");
-                
-                FileWriter escribir =new FileWriter(archivo);
-                FileWriter write_top_ten = new FileWriter(file);
-                
+                FileWriter escribir =new FileWriter(new File("Rankings.txt"));
+                FileWriter write_top_ten = new FileWriter(new File("Rankings_top_10.txt"));
                 this.FileWrite(texto, escribir);
                 this.FileWrite(this.mejores10(texto), write_top_ten);
                 texto.clear();
@@ -116,15 +110,11 @@ public class Estadisticas {
                     }
      public HashMap<String,Integer> readTop() throws FileNotFoundException, IOException{
                     HashMap<String,Integer> texto = new HashMap<String,Integer>();
-                    File archivo = new File ("Top.txt");
-                    FileReader fr = new FileReader (archivo);
-                    BufferedReader br = new BufferedReader(fr);
-
+                    BufferedReader br = new BufferedReader(new FileReader (new File ("Top.txt")));
                     try{
                         String linea;
                         HashMap<String,String> Save=new HashMap<String,String> ();
                          while((linea=br.readLine())!=null){
-
                              String Array[]= linea.split(",");
                              ArrayList <String> words = new ArrayList();
                              for(int i=0; i<Array.length;i++){
@@ -146,25 +136,18 @@ public class Estadisticas {
                                   }
                                   words.clear();
                          }
-                         this.Save(Save);
-                         
-                     }catch(NullPointerException e){
-                                  e.printStackTrace();
-                     }
-                    fr.close(); 
+                         this.Save(Save); 
+                     }catch(NullPointerException e){}
+                    br.close(); 
         return texto;
     }
      public void writeNivel(int nivel, String buceador, int puntaje) throws IOException{
-         File archivo=new File("Nivel "+nivel+".txt");
-         FileWriter escribir =new FileWriter(archivo,true);
+         FileWriter escribir =new FileWriter(new File("Nivel "+nivel+".txt"),true);
          escribir.write(buceador+","+puntaje);
          escribir.write("\r\n");
          escribir.close();
-         
         HashMap<String,Integer> texto = new HashMap<String,Integer>();
-        File f = new File ("Nivel "+nivel+".txt");
-        FileReader fr = new FileReader (f);
-        BufferedReader br = new BufferedReader(fr);
+        BufferedReader br = new BufferedReader(new FileReader (new File ("Nivel "+nivel+".txt")));
         try{
             String linea;
              while((linea=br.readLine())!=null){
@@ -184,41 +167,32 @@ public class Estadisticas {
              }
                     this.FileWriteNivel((LinkedHashMap<String, Integer>) this.mejores10(texto),nivel);
                     this.mejores10(texto).clear();        
-         }catch(NullPointerException e){
-                      e.printStackTrace();
-         }
-        fr.close(); 
+         }catch(NullPointerException e){}
+        br.close(); 
     }
      public void FileWriteNivel(LinkedHashMap<String,Integer> Rank , int nivel) throws IOException{
-         File archivo=new File("Nivel "+nivel+".txt");
-         FileWriter escribir =new FileWriter(archivo);
+         FileWriter escribir =new FileWriter(new File("Nivel "+nivel+".txt"));
          this.FileWrite(Rank, escribir);
          escribir.close();
      }
      public void Save (HashMap<String,String> Save) throws IOException{
-        File archivo=new File("Save.txt");
-        FileWriter escribir =new FileWriter(archivo);
-
+        FileWriter escribir =new FileWriter(new File("Save.txt"));
         String clave;
             Iterator <String> Top = Save.keySet().iterator();
             while(Top.hasNext()){
                 clave=Top.next(); 
                 escribir.write(clave+","+Save.get(clave));
                 escribir.write("\r\n");
-                //System.out.println("El producto es " +clave +" con su Precio de: " +listaProductos.get(clave));
             }
         Save.clear();
         escribir.close();
      }
      public void load (String nombre, Buceador buceador, Mar mar) throws FileNotFoundException, IOException{
-        File archivo = new File ("Save.txt");
-        FileReader fr = new FileReader (archivo);
-        BufferedReader br = new BufferedReader(fr);
-
+        BufferedReader br = new BufferedReader(new FileReader (new File ("Save.txt")));
+        Boolean bandera=false, acierto=false;
         try{
             String linea;
              while((linea=br.readLine())!=null){
-
                  String Array[]= linea.split(",");
                  if(Array[0].contains(nombre)){
                      buceador.setNombre(nombre);
@@ -226,12 +200,18 @@ public class Estadisticas {
                      buceador.setPuntaje(Integer.parseInt(Array[2]));
                      buceador.setBomba(Integer.parseInt(Array[3]));
                      mar.setNivel(Integer.parseInt(Array[4]));
+                     bandera=true;
+                 }else{
+                     acierto=true;
                  }
              }
-         }catch(NullPointerException e){
-                      e.printStackTrace();
-                 }
-        fr.close();
+             if(bandera==false && acierto==true){
+                 JOptionPane.showMessageDialog(null, "El nombre: "+nombre +" No existe. Por lo tanto Usted Juega una nueva Partida");
+             }else{
+                 JOptionPane.showMessageDialog(null, "El nombre: "+nombre +" Si existe. Su Partida fue cargada con exito");
+             }
+         }catch(NullPointerException e){}
+        br.close();
      }
      public void FileWrite (HashMap<String,Integer> texto, FileWriter escribir) throws IOException{
         String General;
