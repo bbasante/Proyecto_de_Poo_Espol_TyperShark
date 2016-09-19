@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package typershark;
+package typerShark;
 
-import helpclases.Const;
 import helpclases.Audio;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -23,17 +17,20 @@ import javafx.stage.Stage;
  */
 public class TyperShark extends Application {
     
-    @Override
+    public static Stage mainStage;
+    public static boolean gameOver;
+    public static PaneOrganizer panel;
+    @Override//Pantalla del Juego
     public void start(Stage stage) throws InterruptedException, IOException {
-        PaneOrganizer panel = new PaneOrganizer();
+        gameOver = true;
+        mainStage = stage;
+        panel = new PaneOrganizer();
         Audio audio = new Audio();
-        new Thread(audio).start();  
-        Scene scene = new Scene(panel.getRoot(),Const.WIDTHSCREEN,Const.HEIGHTSCREEN);
-        panel.listenerKey(scene);
-        stage.setScene(scene);
-        stage.show();
+        new Thread(audio).start(); 
+        mainStage.setScene(panel.getScene());
+        mainStage.setTitle("TyperShark");
+        mainStage.show();
     }
-
     /**
      * @param args the command line arguments
      */
